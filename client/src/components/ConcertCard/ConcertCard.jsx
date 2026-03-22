@@ -1,10 +1,11 @@
-import { styles, bannerColors } from './ConcertCard.styles';
+import { styles, bannerGradients } from './ConcertCard.styles';
 
 export default function ConcertCard({ concert, index, onClick }) {
   return (
-    <div style={styles.card} onClick={onClick}>
-      <div style={{ ...styles.image, background: bannerColors[index % bannerColors.length] }}>
-        {concert.emoji}
+    <div style={styles.card} className="card-hover" onClick={onClick}>
+      <div style={{ ...styles.banner, background: bannerGradients[index % bannerGradients.length] }}>
+        <div style={styles.bannerOverlay} />
+        <span style={styles.emoji}>{concert.emoji}</span>
       </div>
       <div style={styles.body}>
         <div style={styles.info}>

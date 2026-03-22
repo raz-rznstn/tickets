@@ -1,165 +1,172 @@
 export const styles = {
   page: {
     minHeight: '100vh',
-    fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
-    backgroundColor: '#0f172a',
-    color: '#f8fafc',
-    backgroundImage: 'radial-gradient(ellipse 80% 50% at 50% -10%, rgba(99,102,241,0.2), transparent)',
+    fontFamily: "'Inter', sans-serif",
+    backgroundColor: '#0B0B0F',
+    color: '#EAEAEA',
   },
 
-  nav: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: '1.2rem 2.5rem',
-    borderBottom: '1px solid #1e293b',
+  // Hero
+  heroSection: {
+    position: 'relative',
+    textAlign: 'center',
+    padding: '6rem 1.5rem 4rem',
+    overflow: 'hidden',
   },
-  logo: {
-    fontSize: '1rem',
-    fontWeight: '700',
-    color: '#a5b4fc',
+  heroEyebrow: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: '0.75rem',
+    fontSize: '0.72rem',
+    fontWeight: 700,
+    color: '#FF2E63',
+    letterSpacing: '0.35em',
+    textTransform: 'uppercase',
+    marginBottom: '1.5rem',
+  },
+  eyebrowLine: {
+    width: '32px',
+    height: '1px',
+    backgroundColor: '#FF2E63',
+    opacity: 0.5,
+    display: 'inline-block',
+  },
+  heroTitle: {
+    fontSize: '4rem',
+    fontWeight: 900,
+    lineHeight: 1.1,
+    marginBottom: '1rem',
+    letterSpacing: '-0.02em',
+    color: '#EAEAEA',
+  },
+  heroSub: {
+    fontSize: '0.85rem',
+    color: '#4A4A6A',
+    letterSpacing: '0.15em',
+    textTransform: 'uppercase',
+    marginBottom: '2.5rem',
+  },
+
+  // Stats
+  statsSection: {
+    maxWidth: '760px',
+    margin: '0 auto 4rem',
+    padding: '0 1.5rem',
+  },
+  statsGrid: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(4, 1fr)',
+    border: '1px solid #2A2A3D',
+    borderRadius: '16px',
+    overflow: 'hidden',
+  },
+  statItem: {
+    textAlign: 'center',
+    padding: '1.5rem 1rem',
+    borderRight: '1px solid #2A2A3D',
+  },
+  statItemLast: {
+    textAlign: 'center',
+    padding: '1.5rem 1rem',
+  },
+  statNumber: {
+    fontSize: '1.6rem',
+    fontWeight: 900,
+    display: 'block',
+    marginBottom: '0.2rem',
+  },
+  statLabel: {
+    fontSize: '0.68rem',
+    color: '#4A4A6A',
     letterSpacing: '0.12em',
     textTransform: 'uppercase',
   },
-  createBtn: {
+
+  // Divider
+  divider: {
     display: 'flex',
     alignItems: 'center',
-    gap: '0.4rem',
-    backgroundColor: 'transparent',
-    border: '1px solid #334155',
-    color: '#cbd5e1',
-    padding: '0.5rem 1.1rem',
-    borderRadius: '10px',
-    fontSize: '0.88rem',
-    fontWeight: '600',
-    cursor: 'pointer',
-  },
-
-  hero: {
-    textAlign: 'center',
-    padding: '5rem 2rem 3rem',
-  },
-  heroTitle: {
-    fontSize: '3rem',
-    fontWeight: '800',
-    lineHeight: 1.15,
-    margin: '0 0 0.8rem',
-    background: 'linear-gradient(135deg, #f8fafc 30%, #a5b4fc 100%)',
-    WebkitBackgroundClip: 'text',
-    WebkitTextFillColor: 'transparent',
-  },
-  heroSub: {
-    fontSize: '1rem',
-    color: '#64748b',
-    margin: '0 0 2rem',
-  },
-
-  searchWrap: {
-    display: 'flex',
-    maxWidth: '600px',
-    margin: '0 auto',
-    backgroundColor: '#1e293b',
-    border: '1px solid #334155',
-    borderRadius: '14px',
-    overflow: 'hidden',
-  },
-  searchInput: {
-    flex: 1,
-    backgroundColor: 'transparent',
-    border: 'none',
-    outline: 'none',
-    padding: '1rem 1.2rem',
-    fontSize: '1rem',
-    color: '#f1f5f9',
-    minWidth: 0,
-  },
-  searchBtn: {
-    backgroundColor: '#6366f1',
-    border: 'none',
-    color: '#fff',
+    gap: '1rem',
+    maxWidth: '760px',
+    margin: '0 auto 2rem',
     padding: '0 1.5rem',
-    fontSize: '0.95rem',
-    fontWeight: '700',
-    cursor: 'pointer',
-    borderRadius: '0 12px 12px 0',
+  },
+  dividerLine: {
+    flex: 1,
+    height: '1px',
+    backgroundColor: '#2A2A3D',
+  },
+  dividerDots: {
+    fontSize: '0.55rem',
+    color: '#FF2E63',
+    letterSpacing: '0.4em',
+    opacity: 0.7,
+  },
+
+  // Section header
+  sectionHeader: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '1rem',
+    maxWidth: '760px',
+    margin: '0 auto 1.2rem',
+    padding: '0 1.5rem',
+  },
+  sectionLabel: {
+    fontSize: '0.7rem',
+    fontWeight: 700,
+    color: '#4A4A6A',
+    letterSpacing: '0.2em',
+    textTransform: 'uppercase',
+    whiteSpace: 'nowrap',
+  },
+  sectionLine: {
+    flex: 1,
+    height: '1px',
+    backgroundColor: '#2A2A3D',
+  },
+  resultCount: {
+    fontSize: '0.7rem',
+    color: '#4A4A6A',
     whiteSpace: 'nowrap',
   },
 
-  results: {
-    maxWidth: '680px',
-    margin: '2rem auto',
-    padding: '0 2rem 4rem',
-  },
-  resultsLabel: {
-    fontSize: '0.8rem',
-    color: '#475569',
-    marginBottom: '1.2rem',
-    letterSpacing: '0.05em',
-    textTransform: 'uppercase',
+  // Listings
+  listSection: {
+    maxWidth: '760px',
+    margin: '0 auto',
+    padding: '0 1.5rem 6rem',
   },
   grid: {
     display: 'flex',
     flexDirection: 'column',
-    gap: '1.2rem',
-  },
-  card: {
-    backgroundColor: '#131c2e',
-    border: '1px solid #1e293b',
-    borderRadius: '16px',
-    overflow: 'hidden',
-    cursor: 'pointer',
-  },
-  cardImage: {
-    height: '180px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    fontSize: '4rem',
-    position: 'relative',
-  },
-  cardBody: {
-    padding: '1.2rem 1.4rem 1.4rem',
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'flex-end',
     gap: '1rem',
   },
-  cardInfo: {
-    flex: 1,
-    minWidth: 0,
-  },
-  cardTitle: {
-    fontSize: '1.1rem',
-    fontWeight: '700',
-    color: '#f1f5f9',
-    marginBottom: '0.4rem',
-  },
-  cardMeta: {
-    fontSize: '0.82rem',
-    color: '#475569',
-    lineHeight: 1.7,
-  },
-  cardPrice: {
-    fontSize: '1.3rem',
-    fontWeight: '800',
-    color: '#a5b4fc',
-    flexShrink: 0,
-  },
-
   empty: {
     textAlign: 'center',
-    color: '#334155',
-    padding: '3rem 0',
+    color: '#2A2A3D',
+    padding: '4rem 0',
     fontSize: '1rem',
   },
-};
 
-// Per-concert gradient banners
-export const bannerColors = [
-  'linear-gradient(135deg, #1e1b4b 0%, #312e81 100%)',
-  'linear-gradient(135deg, #1a1035 0%, #4c1d95 100%)',
-  'linear-gradient(135deg, #0c1a2e 0%, #1e3a5f 100%)',
-  'linear-gradient(135deg, #1a0a2e 0%, #6b21a8 100%)',
-  'linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%)',
-  'linear-gradient(135deg, #1a0533 0%, #7e22ce 100%)',
-];
+  // Footer
+  footer: {
+    borderTop: '1px solid #1C1C28',
+    padding: '1.5rem 2.5rem',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  footerLogo: {
+    fontSize: '0.85rem',
+    fontWeight: 900,
+    letterSpacing: '0.18em',
+    textTransform: 'uppercase',
+  },
+  footerCopy: {
+    fontSize: '0.7rem',
+    color: '#2A2A3D',
+    letterSpacing: '0.08em',
+  },
+};

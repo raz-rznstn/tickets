@@ -5,8 +5,11 @@ import ConcertForm from '../../components/ConcertForm/ConcertForm';
 export default function CreateConcert() {
   return (
     <div style={styles.page}>
-      <PageHeader title="🎤 Create a Concert" />
-      <ConcertForm />
+      <div className="glow-blob-pink" style={{ width: '400px', height: '300px', top: '-80px', left: '25%' }} />
+      <div style={styles.inner}>
+        <PageHeader title="🎤 Create a Concert" />
+        <ConcertForm />
+      </div>
     </div>
   );
 }
