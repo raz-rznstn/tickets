@@ -2,9 +2,9 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { styles } from './Home.styles';
-import Navbar from '../components/Navbar';
-import SearchBar from '../components/SearchBar';
-import ConcertCard from '../components/ConcertCard';
+import Navbar from '../../components/Navbar/Navbar';
+import SearchBar from '../../components/SearchBar/SearchBar';
+import ConcertCard from '../../components/ConcertCard/ConcertCard';
 
 const fetchConcerts = () =>
   fetch('/api/concerts').then((res) => {

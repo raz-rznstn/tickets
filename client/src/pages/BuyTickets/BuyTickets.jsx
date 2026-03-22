@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { styles } from './BuyTickets.styles';
-import PageHeader from '../components/PageHeader';
-import EventCard from '../components/EventCard';
+import PageHeader from '../../components/PageHeader/PageHeader';
+import EventCard from '../../components/EventCard/EventCard';
 
 const fetchConcerts = () =>
   fetch('/api/concerts').then((res) => {

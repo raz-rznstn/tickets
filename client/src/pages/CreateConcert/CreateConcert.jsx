@@ -1,6 +1,6 @@
 import { styles } from './CreateConcert.styles';
-import PageHeader from '../components/PageHeader';
-import ConcertForm from '../components/ConcertForm';
+import PageHeader from '../../components/PageHeader/PageHeader';
+import ConcertForm from '../../components/ConcertForm/ConcertForm';
 
 export default function CreateConcert() {
   return (
