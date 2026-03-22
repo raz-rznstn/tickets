@@ -1,4 +1,4 @@
-const styles = {
+export const styles = {
   page: {
     minHeight: '100vh',
     fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
@@ -35,8 +35,6 @@ const styles = {
     padding: '2.5rem 2rem',
     width: '240px',
     textAlign: 'center',
-    cursor: 'pointer',
-    transition: 'border-color 0.2s',
   },
   cardIcon: {
     fontSize: '3rem',
@@ -78,28 +76,3 @@ const styles = {
     cursor: 'pointer',
   },
 };
-
-export default function App() {
-  return (
-    <div style={styles.page}>
-      <div style={styles.logo}>TicketFlow</div>
-      <p style={styles.subtitle}>What would you like to do?</p>
-
-      <div style={styles.cards}>
-        <div style={styles.card}>
-          <div style={styles.cardIcon}>🎟️</div>
-          <div style={styles.cardTitle}>Buy Tickets</div>
-          <div style={styles.cardDesc}>Browse upcoming concerts and grab your seat.</div>
-          <button style={styles.cardBtnBuy}>Browse Events</button>
-        </div>
-
-        <div style={styles.card}>
-          <div style={styles.cardIcon}>🎤</div>
-          <div style={styles.cardTitle}>Create a Concert</div>
-          <div style={styles.cardDesc}>Set up your event and start selling tickets.</div>
-          <button style={styles.cardBtnCreate}>Create Event</button>
-        </div>
-      </div>
-    </div>
-  );
-}
