@@ -111,7 +111,7 @@ export default function Home() {
               key={concert._id || concert.title}
               concert={concert}
               index={i}
-              onClick={() => navigate('/buy')}
+              onClick={() => navigate('/concert', { state: { concert } })}
             />
           ))}
         </div>
