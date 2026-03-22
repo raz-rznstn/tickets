@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "MERN Stack Hello World",
   "scripts": {
-    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "dev": "docker-compose up -d && concurrently \"npm run server\" \"npm run client\"",
+    "stop": "docker-compose down",
     "server": "npm run dev --prefix server",
     "client": "npm run dev --prefix client",
     "install:all": "npm install && npm install --prefix server && npm install --prefix client"
