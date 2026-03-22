@@ -1,0 +1,32 @@
+export const styles = {
+  wrap: {
+    display: 'flex',
+    maxWidth: '600px',
+    margin: '0 auto',
+    backgroundColor: '#1e293b',
+    border: '1px solid #334155',
+    borderRadius: '14px',
+    overflow: 'hidden',
+  },
+  input: {
+    flex: 1,
+    backgroundColor: 'transparent',
+    border: 'none',
+    outline: 'none',
+    padding: '1rem 1.2rem',
+    fontSize: '1rem',
+    color: '#f1f5f9',
+    minWidth: 0,
+  },
+  btn: {
+    backgroundColor: '#6366f1',
+    border: 'none',
+    color: '#fff',
+    padding: '0 1.5rem',
+    fontSize: '0.95rem',
+    fontWeight: '700',
+    cursor: 'pointer',
+    borderRadius: '0 12px 12px 0',
+    whiteSpace: 'nowrap',
+  },
+};

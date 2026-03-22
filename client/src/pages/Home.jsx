@@ -1,33 +1,16 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { styles, bannerColors } from './Home.styles';
+import { styles } from './Home.styles';
+import Navbar from '../components/Navbar';
+import SearchBar from '../components/SearchBar';
+import ConcertCard from '../components/ConcertCard';
 
 const fetchConcerts = () =>
   fetch('/api/concerts').then((res) => {
     if (!res.ok) throw new Error(`Server error ${res.status}`);
     return res.json();
   });
-
-function ConcertCard({ concert, index, onClick }) {
-  return (
-    <div style={styles.card} onClick={onClick}>
-      <div style={{ ...styles.cardImage, background: bannerColors[index % bannerColors.length] }}>
-        {concert.emoji}
-      </div>
-      <div style={styles.cardBody}>
-        <div style={styles.cardInfo}>
-          <div style={styles.cardTitle}>{concert.title}</div>
-          <div style={styles.cardMeta}>
-            📅 {concert.date}<br />
-            📍 {concert.venue}
-          </div>
-        </div>
-        <div style={styles.cardPrice}>{concert.price}</div>
-      </div>
-    </div>
-  );
-}
 
 export default function Home() {
   const navigate = useNavigate();
@@ -53,27 +36,16 @@ export default function Home() {
 
   return (
     <div style={styles.page}>
-      <nav style={styles.nav}>
-        <div style={styles.logo}>TicketFlow</div>
-        <button style={styles.createBtn} onClick={() => navigate('/create')}>
-          🎤 Create Event
-        </button>
-      </nav>
+      <Navbar />
 
       <div style={styles.hero}>
         <h1 style={styles.heroTitle}>Find your next<br />live experience.</h1>
         <p style={styles.heroSub}>Search concerts by name or venue.</p>
-
-        <form style={styles.searchWrap} onSubmit={handleSearch}>
-          <input
-            style={styles.searchInput}
-            placeholder="Artist, concert name, or venue..."
-            value={query}
-            onChange={(e) => { setQuery(e.target.value); setSubmitted(false); }}
-            autoFocus
-          />
-          <button style={styles.searchBtn} type="submit">Search</button>
-        </form>
+        <SearchBar
+          value={query}
+          onChange={(e) => { setQuery(e.target.value); setSubmitted(false); }}
+          onSubmit={handleSearch}
+        />
       </div>
 
       <div style={styles.results}>
