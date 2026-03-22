@@ -7,23 +7,21 @@ export const styles = {
     cursor: 'pointer',
   },
   banner: {
-    height: '190px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    fontSize: '4rem',
+    height: '200px',
     position: 'relative',
     overflow: 'hidden',
+  },
+  image: {
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover',
+    display: 'block',
+    transition: 'transform 0.4s ease',
   },
   bannerOverlay: {
     position: 'absolute',
     inset: 0,
-    background: 'rgba(0,0,0,0.2)',
-  },
-  emoji: {
-    position: 'relative',
-    zIndex: 1,
-    filter: 'drop-shadow(0 4px 12px rgba(0,0,0,0.5))',
+    background: 'linear-gradient(to top, rgba(11,11,15,0.7) 0%, rgba(11,11,15,0.1) 60%, transparent 100%)',
   },
   body: {
     padding: '1.2rem 1.4rem 1.4rem',
@@ -41,7 +39,6 @@ export const styles = {
     whiteSpace: 'nowrap',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
-    transition: 'color 0.2s ease',
   },
   meta: {
     fontSize: '0.78rem',
@@ -55,12 +52,3 @@ export const styles = {
     flexShrink: 0,
   },
 };
-
-export const bannerGradients = [
-  'linear-gradient(135deg, #1a0020 0%, #FF2E63 100%)',
-  'linear-gradient(135deg, #001a20 0%, #08D9D6 100%)',
-  'linear-gradient(135deg, #1a1500 0%, #F9ED69 100%)',
-  'linear-gradient(135deg, #0d0025 0%, #7c3aed 100%)',
-  'linear-gradient(135deg, #001510 0%, #10b981 100%)',
-  'linear-gradient(135deg, #1a0015 0%, #FF2E63 50%, #F9ED69 100%)',
-];

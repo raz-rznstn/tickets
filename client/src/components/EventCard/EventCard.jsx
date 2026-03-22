@@ -4,8 +4,8 @@ export default function EventCard({ event }) {
   return (
     <div style={styles.card} className="card-hover card-hover-cyan">
       <div style={styles.banner}>
+        <img src={event.imageUrl} alt={event.title} style={styles.image} />
         <div style={styles.bannerOverlay} />
-        <span style={styles.bannerEmoji}>{event.emoji}</span>
       </div>
       <div style={styles.body}>
         <div style={styles.title}>{event.title}</div>
