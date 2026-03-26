@@ -1,14 +1,6 @@
-import { NAVBAR_HEIGHT } from '../../constants';
+import { styles as common } from '../../styles/common.styles';
 
 export const styles = {
-  page: {
-    minHeight: `calc(100vh - ${NAVBAR_HEIGHT})`,
-    fontFamily: "'Inter', sans-serif",
-    backgroundColor: '#0B0B0F',
-    color: '#EAEAEA',
-  },
-
-  // --- Hero image ---
   heroWrap: {
     position: 'relative',
     height: '480px',
@@ -25,20 +17,6 @@ export const styles = {
     inset: 0,
     background: 'linear-gradient(to top, #0B0B0F 0%, rgba(11,11,15,0.5) 50%, rgba(11,11,15,0.1) 100%)',
   },
-  backBtn: {
-    position: 'absolute',
-    top: '1.5rem',
-    left: '2rem',
-    background: 'rgba(11,11,15,0.7)',
-    backdropFilter: 'blur(10px)',
-    border: '1px solid rgba(255,255,255,0.1)',
-    color: '#EAEAEA',
-    borderRadius: '8px',
-    padding: '0.5rem 1rem',
-    fontSize: '0.85rem',
-    cursor: 'pointer',
-    zIndex: 10,
-  },
   heroBadge: {
     position: 'absolute',
     top: '1.5rem',
@@ -54,7 +32,6 @@ export const styles = {
     zIndex: 10,
   },
 
-  // --- Content ---
   content: {
     maxWidth: '820px',
     margin: '0 auto',
@@ -72,7 +49,6 @@ export const styles = {
     marginBottom: '1.2rem',
   },
 
-  // --- Meta row ---
   metaRow: {
     display: 'flex',
     flexWrap: 'wrap',
@@ -94,22 +70,13 @@ export const styles = {
     fontSize: '1rem',
   },
 
-  // --- Divider ---
   divider: {
     height: '1px',
     backgroundColor: '#1C1C28',
     margin: '2rem 0',
   },
 
-  // --- About section ---
-  sectionLabel: {
-    fontSize: '0.7rem',
-    fontWeight: 700,
-    color: '#4A4A6A',
-    letterSpacing: '0.2em',
-    textTransform: 'uppercase',
-    marginBottom: '0.8rem',
-  },
+  sectionLabel: { ...common.sectionLabel, marginBottom: '0.8rem' },
   aboutText: {
     fontSize: '1rem',
     color: '#8A8AA0',
@@ -117,7 +84,6 @@ export const styles = {
     marginBottom: '2.5rem',
   },
 
-  // --- Highlights ---
   highlights: {
     display: 'grid',
     gridTemplateColumns: 'repeat(3, 1fr)',
@@ -148,7 +114,6 @@ export const styles = {
     color: '#EAEAEA',
   },
 
-  // --- Buy section ---
   buySection: {
     backgroundColor: '#13131A',
     border: '1px solid #2A2A3D',

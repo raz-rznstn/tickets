@@ -1,5 +1,6 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { styles } from './ConcertDetails.styles';
+import { styles as common } from '../../styles/common.styles';
 import { useGetConcert } from '../../services/api/hooks/useConcert';
 
 export default function ConcertDetails() {
@@ -9,7 +10,7 @@ export default function ConcertDetails() {
 
   if (isLoading) {
     return (
-      <div style={styles.page}>
+      <div style={common.page}>
 
         <div style={{ textAlign: 'center', padding: '6rem 2rem', color: '#4A4A6A' }} className="loading-pulse">
           Loading concert...
@@ -20,7 +21,7 @@ export default function ConcertDetails() {
 
   if (error || !concert) {
     return (
-      <div style={styles.page}>
+      <div style={common.page}>
 
         <div style={{ textAlign: 'center', padding: '6rem 2rem', color: '#4A4A6A' }}>
           Concert not found. <button onClick={() => navigate('/')} style={{ color: '#FF2E63', background: 'none', border: 'none', cursor: 'pointer' }}>Go back</button>
@@ -30,7 +31,7 @@ export default function ConcertDetails() {
   }
 
   return (
-    <div style={styles.page}>
+    <div style={common.page}>
       {/* Hero image */}
       <div style={styles.heroWrap}>
         <img src={concert.imageUrl} alt={concert.title} style={styles.heroImage} />

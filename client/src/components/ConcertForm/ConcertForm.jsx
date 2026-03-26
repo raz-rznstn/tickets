@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { styles } from './ConcertForm.styles';
+import { styles as common } from '../../styles/common.styles';
 
 const EMPTY_FORM = {
   title: '',
@@ -45,13 +46,13 @@ export default function ConcertForm() {
       {/* Section: Basic Info */}
       <div style={styles.section}>
         <p style={styles.sectionLabel}>Basic Info</p>
-        <div style={styles.fieldGroup}>
-          <label style={styles.label}>Concert Title</label>
-          <input style={styles.input} name="title" placeholder="e.g. Rock Night Live" value={form.title} onChange={handleChange} required />
+        <div style={common.fieldGroup}>
+          <label style={common.label}>Concert Title</label>
+          <input style={common.input} name="title" placeholder="e.g. Rock Night Live" value={form.title} onChange={handleChange} required />
         </div>
-        <div style={styles.fieldGroup}>
-          <label style={styles.label}>Cover Image URL</label>
-          <input style={styles.input} name="imageUrl" placeholder="https://..." value={form.imageUrl} onChange={handleChange} required />
+        <div style={common.fieldGroup}>
+          <label style={common.label}>Cover Image URL</label>
+          <input style={common.input} name="imageUrl" placeholder="https://..." value={form.imageUrl} onChange={handleChange} required />
         </div>
         {form.imageUrl && (
           <img src={form.imageUrl} alt="preview" style={styles.imagePreview} onError={(e) => { e.target.style.display = 'none'; }} />
@@ -63,23 +64,23 @@ export default function ConcertForm() {
       {/* Section: When & Where */}
       <div style={styles.section}>
         <p style={styles.sectionLabel}>When & Where</p>
-        <div style={styles.fieldGroup}>
-          <label style={styles.label}>Venue</label>
-          <input style={styles.input} name="venue" placeholder="e.g. Madison Square Garden" value={form.venue} onChange={handleChange} required />
+        <div style={common.fieldGroup}>
+          <label style={common.label}>Venue</label>
+          <input style={common.input} name="venue" placeholder="e.g. Madison Square Garden" value={form.venue} onChange={handleChange} required />
         </div>
         <div style={styles.row}>
-          <div style={styles.fieldGroup}>
-            <label style={styles.label}>Date</label>
-            <input style={styles.input} type="date" name="date" value={form.date} onChange={handleChange} required />
+          <div style={common.fieldGroup}>
+            <label style={common.label}>Date</label>
+            <input style={common.input} type="date" name="date" value={form.date} onChange={handleChange} required />
           </div>
-          <div style={styles.fieldGroup}>
-            <label style={styles.label}>Doors Open</label>
-            <input style={styles.input} type="time" name="doorsOpen" value={form.doorsOpen} onChange={handleChange} required />
+          <div style={common.fieldGroup}>
+            <label style={common.label}>Doors Open</label>
+            <input style={common.input} type="time" name="doorsOpen" value={form.doorsOpen} onChange={handleChange} required />
           </div>
         </div>
-        <div style={styles.fieldGroup}>
-          <label style={styles.label}>Ticket Price ($)</label>
-          <input style={styles.input} type="number" name="price" placeholder="e.g. 49" min="0" value={form.price} onChange={handleChange} required />
+        <div style={common.fieldGroup}>
+          <label style={common.label}>Ticket Price ($)</label>
+          <input style={common.input} type="number" name="price" placeholder="e.g. 49" min="0" value={form.price} onChange={handleChange} required />
         </div>
       </div>
 
@@ -88,8 +89,8 @@ export default function ConcertForm() {
       {/* Section: About */}
       <div style={styles.section}>
         <p style={styles.sectionLabel}>About the Event</p>
-        <div style={styles.fieldGroup}>
-          <label style={styles.label}>Description</label>
+        <div style={common.fieldGroup}>
+          <label style={common.label}>Description</label>
           <textarea style={styles.textarea} name="description" placeholder="Describe the experience, lineup, and what makes this event special..." value={form.description} onChange={handleChange} required rows={4} />
         </div>
       </div>
@@ -100,9 +101,9 @@ export default function ConcertForm() {
       <div style={styles.section}>
         <p style={styles.sectionLabel}>Event Details</p>
         <div style={styles.row}>
-          <div style={styles.fieldGroup}>
-            <label style={styles.label}>Genre</label>
-            <select style={styles.input} name="genre" value={form.genre} onChange={handleChange} required>
+          <div style={common.fieldGroup}>
+            <label style={common.label}>Genre</label>
+            <select style={common.input} name="genre" value={form.genre} onChange={handleChange} required>
               <option value="">Select genre</option>
               <option>Rock</option>
               <option>Pop</option>
@@ -116,15 +117,15 @@ export default function ConcertForm() {
               <option>Other</option>
             </select>
           </div>
-          <div style={styles.fieldGroup}>
-            <label style={styles.label}>Capacity</label>
-            <input style={styles.input} type="number" name="capacity" placeholder="e.g. 5000" min="1" value={form.capacity} onChange={handleChange} required />
+          <div style={common.fieldGroup}>
+            <label style={common.label}>Capacity</label>
+            <input style={common.input} type="number" name="capacity" placeholder="e.g. 5000" min="1" value={form.capacity} onChange={handleChange} required />
           </div>
         </div>
         <div style={styles.row}>
-          <div style={styles.fieldGroup}>
-            <label style={styles.label}>Age Limit</label>
-            <select style={styles.input} name="ageLimit" value={form.ageLimit} onChange={handleChange} required>
+          <div style={common.fieldGroup}>
+            <label style={common.label}>Age Limit</label>
+            <select style={common.input} name="ageLimit" value={form.ageLimit} onChange={handleChange} required>
               <option value="">Select</option>
               <option>All Ages</option>
               <option>16+</option>
@@ -132,9 +133,9 @@ export default function ConcertForm() {
               <option>21+</option>
             </select>
           </div>
-          <div style={styles.fieldGroup}>
-            <label style={styles.label}>Photography</label>
-            <select style={styles.input} name="photography" value={form.photography} onChange={handleChange} required>
+          <div style={common.fieldGroup}>
+            <label style={common.label}>Photography</label>
+            <select style={common.input} name="photography" value={form.photography} onChange={handleChange} required>
               <option value="">Select</option>
               <option>Allowed</option>
               <option>Not Allowed</option>

@@ -1,11 +1,8 @@
-import { NAVBAR_HEIGHT } from '../../constants';
+import { styles as common } from '../../styles/common.styles';
 
 export const styles = {
   page: {
-    minHeight: `calc(100vh - ${NAVBAR_HEIGHT})`,
-    fontFamily: "'Inter', sans-serif",
-    backgroundColor: '#0B0B0F',
-    color: '#EAEAEA',
+    ...common.page,
     position: 'relative',
     overflow: 'hidden',
   },
@@ -21,14 +18,7 @@ export const styles = {
     marginBottom: '3rem',
     paddingTop: '1rem',
   },
-  eyebrow: {
-    fontSize: '0.72rem',
-    fontWeight: 700,
-    letterSpacing: '0.2em',
-    textTransform: 'uppercase',
-    color: '#4A4A6A',
-    marginBottom: '0.75rem',
-  },
+  eyebrow: { ...common.eyebrow, marginBottom: '0.75rem' },
   heading: {
     fontSize: '3rem',
     fontWeight: 900,
@@ -40,16 +30,5 @@ export const styles = {
     fontSize: '1rem',
     color: '#4A4A6A',
     margin: 0,
-  },
-  backBtn: {
-    background: 'rgba(255,255,255,0.05)',
-    border: '1px solid rgba(255,255,255,0.1)',
-    color: '#EAEAEA',
-    borderRadius: '8px',
-    padding: '0.5rem 1rem',
-    fontSize: '0.85rem',
-    cursor: 'pointer',
-    marginBottom: '2rem',
-    display: 'inline-block',
   },
 };

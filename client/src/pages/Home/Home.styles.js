@@ -1,14 +1,6 @@
-import { NAVBAR_HEIGHT } from '../../constants';
+import { styles as common } from '../../styles/common.styles';
 
 export const styles = {
-  page: {
-    minHeight: `calc(100vh - ${NAVBAR_HEIGHT})`,
-    fontFamily: "'Inter', sans-serif",
-    backgroundColor: '#0B0B0F',
-    color: '#EAEAEA',
-  },
-
-  // Hero
   heroSection: {
     position: 'relative',
     textAlign: 'center',
@@ -20,11 +12,9 @@ export const styles = {
     alignItems: 'center',
     justifyContent: 'center',
     gap: '0.75rem',
-    fontSize: '0.72rem',
-    fontWeight: 700,
+    ...common.eyebrow,
     color: '#FF2E63',
     letterSpacing: '0.35em',
-    textTransform: 'uppercase',
     marginBottom: '1.5rem',
   },
   eyebrowLine: {
@@ -50,7 +40,6 @@ export const styles = {
     marginBottom: '2.5rem',
   },
 
-  // Stats
   statsSection: {
     maxWidth: '760px',
     margin: '0 auto 4rem',
@@ -85,7 +74,6 @@ export const styles = {
     textTransform: 'uppercase',
   },
 
-  // Divider
   divider: {
     display: 'flex',
     alignItems: 'center',
@@ -106,7 +94,6 @@ export const styles = {
     opacity: 0.7,
   },
 
-  // Section header
   sectionHeader: {
     display: 'flex',
     alignItems: 'center',
@@ -115,14 +102,7 @@ export const styles = {
     margin: '0 auto 1.2rem',
     padding: '0 1.5rem',
   },
-  sectionLabel: {
-    fontSize: '0.7rem',
-    fontWeight: 700,
-    color: '#4A4A6A',
-    letterSpacing: '0.2em',
-    textTransform: 'uppercase',
-    whiteSpace: 'nowrap',
-  },
+  sectionLabel: { ...common.sectionLabel, whiteSpace: 'nowrap' },
   sectionLine: {
     flex: 1,
     height: '1px',
@@ -134,7 +114,6 @@ export const styles = {
     whiteSpace: 'nowrap',
   },
 
-  // Listings
   listSection: {
     maxWidth: '760px',
     margin: '0 auto',
@@ -152,7 +131,6 @@ export const styles = {
     fontSize: '1rem',
   },
 
-  // Footer
   footer: {
     borderTop: '1px solid #1C1C28',
     padding: '1.5rem 2.5rem',

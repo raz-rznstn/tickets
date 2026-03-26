@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { styles } from './BuyTickets.styles';
+import { styles as common } from '../../styles/common.styles';
 import { useGetConcert } from '../../services/api/hooks/useConcert';
 
 export default function BuyTickets() {
@@ -108,29 +109,29 @@ export default function BuyTickets() {
           <p style={styles.formTitle}>Payment Details</p>
 
           <div style={styles.formRow}>
-            <div style={styles.fieldGroup}>
-              <label style={styles.label}>Full Name</label>
-              <input style={styles.input} name="name" placeholder="John Doe" value={form.name} onChange={handleChange} required />
+            <div style={common.fieldGroup}>
+              <label style={common.label}>Full Name</label>
+              <input style={common.input} name="name" placeholder="John Doe" value={form.name} onChange={handleChange} required />
             </div>
-            <div style={styles.fieldGroup}>
-              <label style={styles.label}>Email</label>
-              <input style={styles.input} name="email" type="email" placeholder="john@example.com" value={form.email} onChange={handleChange} required />
+            <div style={common.fieldGroup}>
+              <label style={common.label}>Email</label>
+              <input style={common.input} name="email" type="email" placeholder="john@example.com" value={form.email} onChange={handleChange} required />
             </div>
           </div>
 
-          <div style={styles.fieldGroup}>
-            <label style={styles.label}>Card Number</label>
-            <input style={styles.input} name="card" placeholder="1234 5678 9012 3456" maxLength={19} value={form.card} onChange={handleChange} required />
+          <div style={common.fieldGroup}>
+            <label style={common.label}>Card Number</label>
+            <input style={common.input} name="card" placeholder="1234 5678 9012 3456" maxLength={19} value={form.card} onChange={handleChange} required />
           </div>
 
           <div style={styles.formRow}>
-            <div style={styles.fieldGroup}>
-              <label style={styles.label}>Expiry Date</label>
-              <input style={styles.input} name="expiry" placeholder="MM / YY" maxLength={7} value={form.expiry} onChange={handleChange} required />
+            <div style={common.fieldGroup}>
+              <label style={common.label}>Expiry Date</label>
+              <input style={common.input} name="expiry" placeholder="MM / YY" maxLength={7} value={form.expiry} onChange={handleChange} required />
             </div>
-            <div style={styles.fieldGroup}>
-              <label style={styles.label}>CVV</label>
-              <input style={styles.input} name="cvv" placeholder="•••" maxLength={4} value={form.cvv} onChange={handleChange} required />
+            <div style={common.fieldGroup}>
+              <label style={common.label}>CVV</label>
+              <input style={common.input} name="cvv" placeholder="•••" maxLength={4} value={form.cvv} onChange={handleChange} required />
             </div>
           </div>
 

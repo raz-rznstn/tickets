@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { styles } from './Home.styles';
+import { styles as common } from '../../styles/common.styles';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import ConcertCard from '../../components/ConcertCard/ConcertCard';
 import { useGetConcertsList } from '../../services/api/hooks/useConcerts';
@@ -22,7 +23,7 @@ export default function Home() {
   const displayed = submitted || query ? results : concerts;
 
   return (
-    <div style={styles.page}>
+    <div style={common.page}>
       {/* Hero */}
       <section style={styles.heroSection}>
         {/* Ambient glow blobs */}

@@ -1,3 +1,5 @@
+import { styles as common } from '../../styles/common.styles';
+
 export const styles = {
   form: {
     backgroundColor: '#13131A',
@@ -15,10 +17,7 @@ export const styles = {
     padding: '0.5rem 0 1.5rem',
   },
   sectionLabel: {
-    fontSize: '0.65rem',
-    fontWeight: 700,
-    letterSpacing: '0.2em',
-    textTransform: 'uppercase',
+    ...common.sectionLabel,
     color: '#FF2E63',
     margin: 0,
   },
@@ -27,40 +26,8 @@ export const styles = {
     backgroundColor: '#1C1C28',
     margin: '0.5rem 0 1.5rem',
   },
-  fieldGroup: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '0.45rem',
-  },
-  label: {
-    fontSize: '0.72rem',
-    fontWeight: 600,
-    color: '#4A4A6A',
-    letterSpacing: '0.1em',
-    textTransform: 'uppercase',
-  },
-  input: {
-    backgroundColor: '#0B0B0F',
-    border: '1px solid #2A2A3D',
-    borderRadius: '10px',
-    padding: '0.8rem 1rem',
-    color: '#EAEAEA',
-    fontSize: '0.95rem',
-    width: '100%',
-    boxSizing: 'border-box',
-    outline: 'none',
-    appearance: 'none',
-  },
   textarea: {
-    backgroundColor: '#0B0B0F',
-    border: '1px solid #2A2A3D',
-    borderRadius: '10px',
-    padding: '0.8rem 1rem',
-    color: '#EAEAEA',
-    fontSize: '0.95rem',
-    width: '100%',
-    boxSizing: 'border-box',
-    outline: 'none',
+    ...common.input,
     resize: 'vertical',
     fontFamily: "'Inter', sans-serif",
     lineHeight: 1.6,
@@ -92,7 +59,6 @@ export const styles = {
     width: '100%',
   },
 
-  // --- Success state ---
   success: {
     backgroundColor: '#13131A',
     border: '1px solid #2A2A3D',

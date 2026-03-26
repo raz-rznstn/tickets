@@ -1,11 +1,8 @@
-import { NAVBAR_HEIGHT } from '../../constants';
+import { styles as common } from '../../styles/common.styles';
 
 export const styles = {
   page: {
-    minHeight: `calc(100vh - ${NAVBAR_HEIGHT})`,
-    fontFamily: "'Inter', sans-serif",
-    backgroundColor: '#0B0B0F',
-    color: '#EAEAEA',
+    ...common.page,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -22,26 +19,7 @@ export const styles = {
     flexDirection: 'column',
     alignItems: 'center',
   },
-  backBtn: {
-    alignSelf: 'flex-start',
-    background: 'rgba(255,255,255,0.05)',
-    border: '1px solid rgba(255,255,255,0.1)',
-    color: '#EAEAEA',
-    borderRadius: '8px',
-    padding: '0.5rem 1rem',
-    fontSize: '0.85rem',
-    cursor: 'pointer',
-    marginBottom: '2rem',
-  },
-  eyebrow: {
-    fontSize: '0.72rem',
-    fontWeight: 700,
-    letterSpacing: '0.2em',
-    textTransform: 'uppercase',
-    color: '#4A4A6A',
-    marginBottom: '0.5rem',
-    textAlign: 'center',
-  },
+  eyebrow: { ...common.eyebrow, marginBottom: '0.5rem', textAlign: 'center' },
   heading: {
     fontSize: '2.2rem',
     fontWeight: 900,
@@ -50,7 +28,6 @@ export const styles = {
     letterSpacing: '-0.02em',
   },
 
-  // --- Ticket shell ---
   ticket: {
     width: '100%',
     display: 'flex',
@@ -70,7 +47,6 @@ export const styles = {
     zIndex: 0,
   },
 
-  // --- Left stub ---
   stub: {
     flexShrink: 0,
     width: '110px',
@@ -115,7 +91,6 @@ export const styles = {
     letterSpacing: '0.08em',
   },
 
-  // --- Perforation ---
   perforation: {
     flexShrink: 0,
     width: '20px',
@@ -147,7 +122,6 @@ export const styles = {
     marginBottom: '-1px',
   },
 
-  // --- Main body ---
   body: {
     flex: 1,
     backgroundColor: '#13131A',
@@ -200,13 +174,7 @@ export const styles = {
     flexDirection: 'column',
     gap: '0.2rem',
   },
-  metaLabel: {
-    fontSize: '0.62rem',
-    fontWeight: 700,
-    letterSpacing: '0.15em',
-    textTransform: 'uppercase',
-    color: '#4A4A6A',
-  },
+  metaLabel: { ...common.sectionLabel, fontSize: '0.62rem', letterSpacing: '0.15em' },
   metaValue: {
     fontSize: '0.9rem',
     fontWeight: 600,
@@ -218,7 +186,6 @@ export const styles = {
     color: '#FF2E63',
   },
 
-  // --- Footer: barcode + number ---
   ticketFooter: {
     borderTop: '1px solid #1C1C28',
     paddingTop: '1rem',
@@ -247,7 +214,6 @@ export const styles = {
     textTransform: 'uppercase',
   },
 
-  // --- Payment form ---
   form: {
     width: '100%',
     backgroundColor: '#13131A',
@@ -259,41 +225,11 @@ export const styles = {
     flexDirection: 'column',
     gap: '1.2rem',
   },
-  formTitle: {
-    fontSize: '0.7rem',
-    fontWeight: 700,
-    letterSpacing: '0.2em',
-    textTransform: 'uppercase',
-    color: '#4A4A6A',
-    margin: 0,
-  },
+  formTitle: { ...common.sectionLabel, margin: 0 },
   formRow: {
     display: 'grid',
     gridTemplateColumns: '1fr 1fr',
     gap: '1rem',
-  },
-  fieldGroup: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '0.4rem',
-  },
-  label: {
-    fontSize: '0.72rem',
-    fontWeight: 600,
-    letterSpacing: '0.1em',
-    textTransform: 'uppercase',
-    color: '#4A4A6A',
-  },
-  input: {
-    backgroundColor: '#0B0B0F',
-    border: '1px solid #2A2A3D',
-    borderRadius: '10px',
-    padding: '0.75rem 1rem',
-    fontSize: '0.95rem',
-    color: '#EAEAEA',
-    outline: 'none',
-    width: '100%',
-    boxSizing: 'border-box',
   },
   formFooter: {
     display: 'flex',
@@ -309,13 +245,7 @@ export const styles = {
     flexDirection: 'column',
     gap: '0.2rem',
   },
-  totalLabel: {
-    fontSize: '0.65rem',
-    fontWeight: 700,
-    letterSpacing: '0.15em',
-    textTransform: 'uppercase',
-    color: '#4A4A6A',
-  },
+  totalLabel: { ...common.sectionLabel, fontSize: '0.65rem', letterSpacing: '0.15em' },
   totalValue: {
     fontSize: '2rem',
     fontWeight: 900,
