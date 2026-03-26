@@ -1,8 +1,10 @@
+import { colors, fontSize, fontWeight, borderRadius } from '../../styles/tokens';
+
 export const styles = {
   card: {
-    backgroundColor: '#13131A',
-    border: '1px solid #2A2A3D',
-    borderRadius: '16px',
+    backgroundColor: colors.bgCard,
+    border: `1px solid ${colors.borderDefault}`,
+    borderRadius: borderRadius.xl,
     overflow: 'hidden',
     cursor: 'pointer',
   },
@@ -21,34 +23,34 @@ export const styles = {
   bannerOverlay: {
     position: 'absolute',
     inset: 0,
-    background: 'linear-gradient(to top, rgba(11,11,15,0.7) 0%, rgba(11,11,15,0.1) 60%, transparent 100%)',
+    background: `linear-gradient(to top, ${colors.overlayDark} 0%, ${colors.overlayLight} 60%, transparent 100%)`,
   },
   body: {
-    padding: '1.2rem 1.4rem 1.4rem',
+    padding: '19px 22px 22px',
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'flex-end',
-    gap: '1rem',
+    gap: '16px',
   },
   info: { flex: 1, minWidth: 0 },
   title: {
-    fontSize: '1.05rem',
-    fontWeight: 700,
-    color: '#EAEAEA',
-    marginBottom: '0.4rem',
+    fontSize: fontSize.xl3,
+    fontWeight: fontWeight.bold,
+    color: colors.textPrimary,
+    marginBottom: '6px',
     whiteSpace: 'nowrap',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
   },
   meta: {
-    fontSize: '0.78rem',
-    color: '#4A4A6A',
+    fontSize: fontSize.md,
+    color: colors.textSecondary,
     lineHeight: 1.75,
   },
   price: {
-    fontSize: '1.25rem',
-    fontWeight: 900,
-    color: '#FF2E63',
+    fontSize: fontSize.xl5,
+    fontWeight: fontWeight.black,
+    color: colors.primary,
     flexShrink: 0,
   },
 };

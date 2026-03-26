@@ -1,4 +1,5 @@
 import { styles as common } from '../../styles/common.styles';
+import { colors, fontSize, fontWeight, zIndex } from '../../styles/tokens';
 
 export const styles = {
   page: {
@@ -9,26 +10,26 @@ export const styles = {
   inner: {
     maxWidth: '780px',
     margin: '0 auto',
-    padding: '2rem 2rem 6rem',
+    padding: '32px 32px 96px',
     position: 'relative',
-    zIndex: 1,
+    zIndex: zIndex.raised,
   },
   header: {
     textAlign: 'center',
-    marginBottom: '3rem',
-    paddingTop: '1rem',
+    marginBottom: '48px',
+    paddingTop: '16px',
   },
-  eyebrow: { ...common.eyebrow, marginBottom: '0.75rem' },
+  eyebrow: { ...common.eyebrow, marginBottom: '12px' },
   heading: {
-    fontSize: '3rem',
-    fontWeight: 900,
+    fontSize: fontSize.display5,
+    fontWeight: fontWeight.black,
     letterSpacing: '-0.03em',
     lineHeight: 1.1,
-    margin: '0 0 1rem',
+    margin: '0 0 16px',
   },
   sub: {
-    fontSize: '1rem',
-    color: '#4A4A6A',
+    fontSize: fontSize.xl2,
+    color: colors.textSecondary,
     margin: 0,
   },
 };

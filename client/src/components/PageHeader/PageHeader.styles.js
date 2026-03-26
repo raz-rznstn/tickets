@@ -1,23 +1,25 @@
+import { colors, fontSize, fontWeight, borderRadius } from '../../styles/tokens';
+
 export const styles = {
   header: {
     display: 'flex',
     alignItems: 'center',
-    gap: '1rem',
-    marginBottom: '2.5rem',
+    gap: '16px',
+    marginBottom: '40px',
   },
   back: {
     background: 'none',
-    border: '1px solid #2A2A3D',
-    color: '#4A4A6A',
-    borderRadius: '8px',
-    padding: '0.45rem 1rem',
+    border: `1px solid ${colors.borderDefault}`,
+    color: colors.textSecondary,
+    borderRadius: borderRadius.sm,
+    padding: '7px 16px',
     cursor: 'pointer',
-    fontSize: '0.85rem',
+    fontSize: fontSize.lg,
   },
   title: {
-    fontSize: '1.6rem',
-    fontWeight: 900,
-    color: '#EAEAEA',
+    fontSize: fontSize.xl8,
+    fontWeight: fontWeight.black,
+    color: colors.textPrimary,
     margin: 0,
     letterSpacing: '-0.01em',
   },

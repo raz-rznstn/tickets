@@ -1,8 +1,10 @@
+import { colors, fontSize, fontWeight, borderRadius } from '../../styles/tokens';
+
 export const styles = {
   card: {
-    backgroundColor: '#13131A',
-    border: '1px solid #2A2A3D',
-    borderRadius: '16px',
+    backgroundColor: colors.bgCard,
+    border: `1px solid ${colors.borderDefault}`,
+    borderRadius: borderRadius.xl,
     overflow: 'hidden',
   },
   banner: {
@@ -22,17 +24,17 @@ export const styles = {
     inset: 0,
     background: 'linear-gradient(to top, rgba(11,11,15,0.65) 0%, transparent 60%)',
   },
-  body: { padding: '1.2rem' },
+  body: { padding: '19px' },
   title: {
-    fontSize: '1rem',
-    fontWeight: 700,
-    color: '#EAEAEA',
-    marginBottom: '0.3rem',
+    fontSize: fontSize.xl2,
+    fontWeight: fontWeight.bold,
+    color: colors.textPrimary,
+    marginBottom: '5px',
   },
   meta: {
-    fontSize: '0.78rem',
-    color: '#4A4A6A',
-    marginBottom: '1rem',
+    fontSize: fontSize.md,
+    color: colors.textSecondary,
+    marginBottom: '16px',
     lineHeight: 1.7,
   },
   footer: {
@@ -41,20 +43,20 @@ export const styles = {
     alignItems: 'center',
   },
   price: {
-    fontSize: '1.15rem',
-    fontWeight: 900,
-    color: '#FF2E63',
+    fontSize: fontSize.xl4,
+    fontWeight: fontWeight.black,
+    color: colors.primary,
   },
   buyBtn: {
-    background: 'linear-gradient(135deg, #FF2E63, #e0196b)',
-    color: '#fff',
+    background: `linear-gradient(135deg, ${colors.primary}, ${colors.primaryDark})`,
+    color: colors.textWhite,
     border: 'none',
-    borderRadius: '8px',
-    padding: '0.5rem 1.2rem',
-    fontWeight: 700,
-    fontSize: '0.78rem',
+    borderRadius: borderRadius.sm,
+    padding: '8px 19px',
+    fontWeight: fontWeight.bold,
+    fontSize: fontSize.md,
     cursor: 'pointer',
-    letterSpacing: '0.08em',
+    letterSpacing: '1.3px',
     textTransform: 'uppercase',
   },
 };
