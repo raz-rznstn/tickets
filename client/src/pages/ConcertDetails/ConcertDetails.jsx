@@ -1,13 +1,25 @@
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { styles } from './ConcertDetails.styles';
 import Navbar from '../../components/Navbar/Navbar';
+import { useGetConcert } from '../../services/api/hooks/useConcert';
 
 export default function ConcertDetails() {
-  const { state } = useLocation();
+  const { id } = useParams();
   const navigate = useNavigate();
-  const concert = state?.concert;
+  const { data: concert, isLoading, error } = useGetConcert(id);
 
-  if (!concert) {
+  if (isLoading) {
+    return (
+      <div style={styles.page}>
+        <Navbar />
+        <div style={{ textAlign: 'center', padding: '6rem 2rem', color: '#4A4A6A' }} className="loading-pulse">
+          Loading concert...
+        </div>
+      </div>
+    );
+  }
+
+  if (error || !concert) {
     return (
       <div style={styles.page}>
         <Navbar />

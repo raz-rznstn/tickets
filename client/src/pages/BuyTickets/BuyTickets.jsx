@@ -1,19 +1,10 @@
-import { useQuery } from '@tanstack/react-query';
 import { styles } from './BuyTickets.styles';
 import PageHeader from '../../components/PageHeader/PageHeader';
 import EventCard from '../../components/EventCard/EventCard';
-
-const fetchConcerts = () =>
-  fetch('/api/concerts').then((res) => {
-    if (!res.ok) throw new Error(`Server error ${res.status}`);
-    return res.json();
-  });
+import { useGetConcertsList } from '../../services/api/hooks/useConcerts';
 
 export default function BuyTickets() {
-  const { data: events = [], isLoading, error } = useQuery({
-    queryKey: ['concerts'],
-    queryFn: fetchConcerts,
-  });
+  const { data: events = [], isLoading, error } = useGetConcertsList();
 
   return (
     <div style={styles.page}>

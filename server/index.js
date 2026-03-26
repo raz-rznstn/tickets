@@ -20,6 +20,12 @@ app.get('/api/concerts', (_req, res) => {
   res.json(concerts);
 });
 
+app.get('/api/concerts/:id', (req, res) => {
+  const concert = concerts.find((c) => c._id === req.params.id);
+  if (!concert) return res.status(404).json({ message: 'Concert not found' });
+  res.json(concert);
+});
+
 app.post('/api/concerts', (req, res) => {
   const concert = { ...req.body, id: Date.now() };
   concerts.push(concert);

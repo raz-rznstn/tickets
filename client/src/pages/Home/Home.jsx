@@ -1,16 +1,10 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
 import { styles } from './Home.styles';
 import Navbar from '../../components/Navbar/Navbar';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import ConcertCard from '../../components/ConcertCard/ConcertCard';
-
-const fetchConcerts = () =>
-  fetch('/api/concerts').then((res) => {
-    if (!res.ok) throw new Error(`Server error ${res.status}`);
-    return res.json();
-  });
+import { useGetConcertsList } from '../../services/api/hooks/useConcerts';
 
 const stats = [
   { number: '500+', label: 'Live Events' },
@@ -24,10 +18,7 @@ export default function Home() {
   const [query, setQuery] = useState('');
   const [submitted, setSubmitted] = useState(false);
 
-  const { data: concerts = [], isLoading } = useQuery({
-    queryKey: ['concerts'],
-    queryFn: fetchConcerts,
-  });
+  const { data: concerts = [], isLoading } = useGetConcertsList();
 
   const results = concerts.filter((c) =>
     c.title.toLowerCase().includes(query.toLowerCase()) ||
@@ -111,7 +102,7 @@ export default function Home() {
               key={concert._id || concert.title}
               concert={concert}
               index={i}
-              onClick={() => navigate('/concert', { state: { concert } })}
+              onClick={() => navigate(`/concert/${concert._id}`)}
             />
           ))}
         </div>

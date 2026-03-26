@@ -15,7 +15,7 @@ export default function Root() {
           <Route path="/" element={<Home />} />
           <Route path="/buy" element={<BuyTickets />} />
           <Route path="/create" element={<CreateConcert />} />
-          <Route path="/concert" element={<ConcertDetails />} />
+          <Route path="/concert/:id" element={<ConcertDetails />} />
         </Routes>
       </BrowserRouter>
     </QueryClientProvider>
