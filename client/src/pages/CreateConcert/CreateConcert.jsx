@@ -1,17 +1,12 @@
-import { useNavigate } from 'react-router-dom';
 import { styles } from './CreateConcert.styles';
 import ConcertForm from '../../components/ConcertForm/ConcertForm';
-import Navbar from '../../components/Navbar/Navbar';
 
 export default function CreateConcert() {
-  const navigate = useNavigate();
   return (
     <div style={styles.page}>
       <div className="glow-blob-pink" style={{ width: '600px', height: '400px', top: '-120px', left: '50%', transform: 'translateX(-50%)' }} />
       <div className="glow-blob-cyan" style={{ width: '400px', height: '300px', top: '200px', right: '-100px' }} />
-      <Navbar />
       <div style={styles.inner}>
-        <button style={styles.backBtn} onClick={() => navigate(-1)}>← Back</button>
         <div style={styles.header}>
           <p style={styles.eyebrow}>Artist Portal</p>
           <h1 style={styles.heading}>

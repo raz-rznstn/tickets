@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { styles } from './Home.styles';
-import Navbar from '../../components/Navbar/Navbar';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import ConcertCard from '../../components/ConcertCard/ConcertCard';
 import { useGetConcertsList } from '../../services/api/hooks/useConcerts';
@@ -24,8 +23,6 @@ export default function Home() {
 
   return (
     <div style={styles.page}>
-      <Navbar />
-
       {/* Hero */}
       <section style={styles.heroSection}>
         {/* Ambient glow blobs */}

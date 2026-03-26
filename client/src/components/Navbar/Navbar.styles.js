@@ -1,8 +1,11 @@
 export const styles = {
-  nav: {
+  wrapper: {
     position: 'sticky',
     top: 0,
     zIndex: 50,
+  },
+  nav: {
+    height: '64px',
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -11,11 +14,26 @@ export const styles = {
     backdropFilter: 'blur(16px)',
     borderBottom: '1px solid #1C1C28',
   },
+  backBtn: {
+    position: 'absolute',
+    top: '100%',
+    left: '2.5rem',
+    marginTop: '1rem',
+    backgroundColor: 'rgba(11,11,15,0.92)',
+    backdropFilter: 'blur(16px)',
+    border: '1px solid #2A2A3D',
+    color: '#EAEAEA',
+    borderRadius: '8px',
+    padding: '0.4rem 0.9rem',
+    fontSize: '0.8rem',
+    cursor: 'pointer',
+  },
   logo: {
     fontSize: '1.3rem',
     fontWeight: 900,
     letterSpacing: '0.15em',
     textTransform: 'uppercase',
+    cursor: 'pointer',
   },
   logoPrimary: { color: '#FF2E63' },
   logoSecondary: { color: '#08D9D6' },

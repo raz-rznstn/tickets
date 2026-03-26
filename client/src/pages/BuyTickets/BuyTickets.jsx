@@ -47,8 +47,6 @@ export default function BuyTickets() {
       <div className="glow-blob-pink" style={{ width: '500px', height: '400px', top: '-100px', left: '50%', transform: 'translateX(-50%)' }} />
       <div style={styles.inner}>
 
-        <button style={styles.backBtn} onClick={() => navigate(-1)}>← Back</button>
-
         <p style={styles.eyebrow}>Your Digital Ticket</p>
         <h1 style={styles.heading}>You're going <span className="gradient-text">live.</span></h1>
 

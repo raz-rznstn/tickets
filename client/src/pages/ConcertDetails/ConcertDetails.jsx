@@ -1,6 +1,5 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { styles } from './ConcertDetails.styles';
-import Navbar from '../../components/Navbar/Navbar';
 import { useGetConcert } from '../../services/api/hooks/useConcert';
 
 export default function ConcertDetails() {
@@ -11,7 +10,7 @@ export default function ConcertDetails() {
   if (isLoading) {
     return (
       <div style={styles.page}>
-        <Navbar />
+
         <div style={{ textAlign: 'center', padding: '6rem 2rem', color: '#4A4A6A' }} className="loading-pulse">
           Loading concert...
         </div>
@@ -22,7 +21,7 @@ export default function ConcertDetails() {
   if (error || !concert) {
     return (
       <div style={styles.page}>
-        <Navbar />
+
         <div style={{ textAlign: 'center', padding: '6rem 2rem', color: '#4A4A6A' }}>
           Concert not found. <button onClick={() => navigate('/')} style={{ color: '#FF2E63', background: 'none', border: 'none', cursor: 'pointer' }}>Go back</button>
         </div>
@@ -32,16 +31,11 @@ export default function ConcertDetails() {
 
   return (
     <div style={styles.page}>
-      <Navbar />
-
       {/* Hero image */}
       <div style={styles.heroWrap}>
         <img src={concert.imageUrl} alt={concert.title} style={styles.heroImage} />
         <div style={styles.heroOverlay} />
-        <button style={styles.backBtn} className="btn-outline-muted" onClick={() => navigate(-1)}>
-          ← Back
-        </button>
-        <span style={styles.heroBadge}>🎟️ On Sale</span>
+<span style={styles.heroBadge}>🎟️ On Sale</span>
       </div>
 
       {/* Main content */}

@@ -1,6 +1,8 @@
+import { NAVBAR_HEIGHT } from '../../constants';
+
 export const styles = {
   page: {
-    minHeight: '100vh',
+    minHeight: `calc(100vh - ${NAVBAR_HEIGHT})`,
     fontFamily: "'Inter', sans-serif",
     backgroundColor: '#0B0B0F',
     color: '#EAEAEA',
