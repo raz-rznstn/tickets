@@ -64,7 +64,7 @@ export default function ConcertDetails() {
           </div>
           <div style={styles.metaChip}>
             <span style={styles.metaChipIcon}>⏰</span>
-            Doors open at 7:00 PM
+            Doors open at {concert.doorsOpen}
           </div>
         </div>
 
@@ -72,25 +72,12 @@ export default function ConcertDetails() {
 
         {/* About */}
         <div style={styles.sectionLabel}>About This Event</div>
-        <p style={styles.aboutText}>
-          Experience an unforgettable night at <strong style={{ color: '#EAEAEA' }}>{concert.title}</strong> —
-          one of the most anticipated live events of 2026. Held at the legendary <strong style={{ color: '#EAEAEA' }}>{concert.venue}</strong>,
-          this show promises world-class performances, stunning stage production, and an electric atmosphere
-          you won't find anywhere else. Whether you're a longtime fan or discovering the act for the first time,
-          this is a night you'll be talking about for years.
-        </p>
+        <p style={styles.aboutText}>{concert.description}</p>
 
         {/* Highlights */}
         <div style={styles.sectionLabel}>Event Highlights</div>
         <div style={styles.highlights}>
-          {[
-            { icon: '🎵', label: 'Genre', value: 'Live Music' },
-            { icon: '🏟️', label: 'Capacity', value: '15,000+' },
-            { icon: '⭐', label: 'Rating', value: '4.9 / 5' },
-            { icon: '🌍', label: 'Language', value: 'English' },
-            { icon: '🎭', label: 'Age Limit', value: '16+' },
-            { icon: '📸', label: 'Photography', value: 'Allowed' },
-          ].map((h) => (
+          {concert.highlights.map((h) => (
             <div key={h.label} style={styles.highlightCard}>
               <div style={styles.highlightIcon}>{h.icon}</div>
               <div style={styles.highlightLabel}>{h.label}</div>
