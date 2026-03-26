@@ -1,6 +1,6 @@
 const concerts = [
   {
-    _id: '1',
+    id: '1',
     imageUrl: 'https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?w=800&q=80&fit=crop',
     title: 'Rock Night Live',
     date: 'Apr 12, 2026',
@@ -8,7 +8,7 @@ const concerts = [
     price: '$49',
   },
   {
-    _id: '2',
+    id: '2',
     imageUrl: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=800&q=80&fit=crop',
     title: 'Piano & Soul',
     date: 'Apr 20, 2026',
@@ -16,7 +16,7 @@ const concerts = [
     price: '$35',
   },
   {
-    _id: '3',
+    id: '3',
     imageUrl: 'https://images.unsplash.com/photo-1415201364774-f6f0bb35f28f?w=800&q=80&fit=crop',
     title: 'Jazz Fest 2026',
     date: 'May 3, 2026',
@@ -24,7 +24,7 @@ const concerts = [
     price: '$28',
   },
   {
-    _id: '4',
+    id: '4',
     imageUrl: 'https://images.unsplash.com/photo-1465847899084-d164df4dedc6?w=800&q=80&fit=crop',
     title: 'Symphony Evening',
     date: 'May 15, 2026',
@@ -32,7 +32,7 @@ const concerts = [
     price: '$60',
   },
   {
-    _id: '5',
+    id: '5',
     imageUrl: 'https://images.unsplash.com/photo-1524368535928-5b5e00ddc76b?w=800&q=80&fit=crop',
     title: 'Pop Stars Unite',
     date: 'Jun 1, 2026',
@@ -40,7 +40,7 @@ const concerts = [
     price: '$75',
   },
   {
-    _id: '6',
+    id: '6',
     imageUrl: 'https://images.unsplash.com/photo-1571266028243-e4733b0f0bb0?w=800&q=80&fit=crop',
     title: 'Drum & Bass Night',
     date: 'Jun 18, 2026',

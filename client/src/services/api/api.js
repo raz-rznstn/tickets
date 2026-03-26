@@ -1,11 +1,19 @@
+const baseServerUrl = '/api';
+
 export const fetchConcerts = () =>
-  fetch('/api/concerts').then((res) => {
+  fetch(`${baseServerUrl}/concerts`).then((res) => {
     if (!res.ok) throw new Error(`Server error ${res.status}`);
     return res.json();
   });
 
 export const fetchConcertById = (id) =>
-  fetch(`/api/concerts/${id}`).then((res) => {
+  fetch(`${baseServerUrl}/concerts/${id}`).then((res) => {
+    if (!res.ok) throw new Error(`Server error ${res.status}`);
+    return res.json();
+  });
+
+export const fetchStats = () =>
+  fetch(`${baseServerUrl}/stats`).then((res) => {
     if (!res.ok) throw new Error(`Server error ${res.status}`);
     return res.json();
   });

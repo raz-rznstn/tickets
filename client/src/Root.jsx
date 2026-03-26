@@ -13,7 +13,7 @@ export default function Root() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/buy" element={<BuyTickets />} />
+          <Route path="/buy/:id" element={<BuyTickets />} />
           <Route path="/create" element={<CreateConcert />} />
           <Route path="/concert/:id" element={<ConcertDetails />} />
         </Routes>

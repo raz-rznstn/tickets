@@ -108,7 +108,7 @@ export default function ConcertDetails() {
             <div style={styles.priceValue}>{concert.price}</div>
             <div style={styles.priceNote}>per person · includes all fees</div>
           </div>
-          <button style={styles.buyBtn} className="btn-primary">
+          <button style={styles.buyBtn} className="btn-primary" onClick={() => navigate(`/buy/${id}`)}>
             🎟️ Buy Ticket Now
           </button>
         </div>

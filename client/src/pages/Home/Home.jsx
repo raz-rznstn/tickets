@@ -5,13 +5,7 @@ import Navbar from '../../components/Navbar/Navbar';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import ConcertCard from '../../components/ConcertCard/ConcertCard';
 import { useGetConcertsList } from '../../services/api/hooks/useConcerts';
-
-const stats = [
-  { number: '500+', label: 'Live Events' },
-  { number: '50K+', label: 'Tickets Sold' },
-  { number: '120+', label: 'Venues' },
-  { number: '200+', label: 'Artists' },
-];
+import { useGetStats } from '../../services/api/hooks/useGetStats';
 
 export default function Home() {
   const navigate = useNavigate();
@@ -19,6 +13,7 @@ export default function Home() {
   const [submitted, setSubmitted] = useState(false);
 
   const { data: concerts = [], isLoading } = useGetConcertsList();
+  const { data: stats = [] } = useGetStats();
 
   const results = concerts.filter((c) =>
     c.title.toLowerCase().includes(query.toLowerCase()) ||
@@ -99,10 +94,10 @@ export default function Home() {
         <div style={styles.grid}>
           {displayed.map((concert, i) => (
             <ConcertCard
-              key={concert._id || concert.title}
+              key={concert.id || concert.title}
               concert={concert}
               index={i}
-              onClick={() => navigate(`/concert/${concert._id}`)}
+              onClick={() => navigate(`/concert/${concert.id}`)}
             />
           ))}
         </div>

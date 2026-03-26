@@ -1,23 +1,152 @@
+import { useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { styles } from './BuyTickets.styles';
-import PageHeader from '../../components/PageHeader/PageHeader';
-import EventCard from '../../components/EventCard/EventCard';
-import { useGetConcertsList } from '../../services/api/hooks/useConcerts';
+import { useGetConcert } from '../../services/api/hooks/useConcert';
 
 export default function BuyTickets() {
-  const { data: events = [], isLoading, error } = useGetConcertsList();
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const { data: concert, isLoading, error } = useGetConcert(id);
+
+  const [form, setForm] = useState({ name: '', email: '', card: '', expiry: '', cvv: '' });
+
+  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    alert(`Purchase confirmed for ${concert.title}!`);
+  };
+
+  if (isLoading) {
+    return (
+      <div style={styles.page}>
+        <div style={{ textAlign: 'center', padding: '6rem 2rem', color: '#4A4A6A' }} className="loading-pulse">
+          Preparing your ticket...
+        </div>
+      </div>
+    );
+  }
+
+  if (error || !concert) {
+    return (
+      <div style={styles.page}>
+        <div style={{ textAlign: 'center', padding: '6rem 2rem', color: '#4A4A6A' }}>
+          Ticket not found.{' '}
+          <button onClick={() => navigate('/')} style={{ color: '#FF2E63', background: 'none', border: 'none', cursor: 'pointer' }}>
+            Go back
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  const ticketNumber = `TF-${concert.id}-${Date.now().toString().slice(-5)}`;
 
   return (
     <div style={styles.page}>
-      <div className="glow-blob-cyan" style={{ width: '500px', height: '300px', top: '-80px', left: '50%', transform: 'translateX(-50%)' }} />
+      <div className="glow-blob-pink" style={{ width: '500px', height: '400px', top: '-100px', left: '50%', transform: 'translateX(-50%)' }} />
       <div style={styles.inner}>
-        <PageHeader title="🎟️ Upcoming Events" />
-        {isLoading && <p style={{ color: '#4A4A6A' }} className="loading-pulse">Loading events...</p>}
-        {error && <p style={{ color: '#FF2E63' }}>Error: {error.message}</p>}
-        <div style={styles.grid}>
-          {events.map((event) => (
-            <EventCard key={event._id || event.title} event={event} />
-          ))}
+
+        <button style={styles.backBtn} onClick={() => navigate(-1)}>← Back</button>
+
+        <p style={styles.eyebrow}>Your Digital Ticket</p>
+        <h1 style={styles.heading}>You're going <span className="gradient-text">live.</span></h1>
+
+        {/* Ticket */}
+        <div style={styles.ticket}>
+          <div style={styles.stub}>
+            <div style={styles.stubDate}>{concert.date.split(',')[0]}</div>
+            <div style={styles.stubYear}>{concert.date.split(',')[1]?.trim()}</div>
+            <div style={styles.stubDivider} />
+            <div style={styles.stubSeat}>GA</div>
+            <div style={styles.stubSeatLabel}>General<br />Admission</div>
+          </div>
+
+          <div style={styles.perforation}>
+            <div style={styles.circleTop} />
+            <div style={styles.dashedLine} />
+            <div style={styles.circleBottom} />
+          </div>
+
+          <div style={styles.body}>
+            <div style={styles.bodyTop}>
+              <span style={styles.genre}>Live Music</span>
+              <span style={styles.badge}>🎟️ On Sale</span>
+            </div>
+            <h2 style={styles.title}>{concert.title}</h2>
+            <div style={styles.metaRow}>
+              <div style={styles.metaItem}>
+                <span style={styles.metaLabel}>Venue</span>
+                <span style={styles.metaValue}>{concert.venue}</span>
+              </div>
+              <div style={styles.metaItem}>
+                <span style={styles.metaLabel}>Date</span>
+                <span style={styles.metaValue}>{concert.date}</span>
+              </div>
+              <div style={styles.metaItem}>
+                <span style={styles.metaLabel}>Doors Open</span>
+                <span style={styles.metaValue}>7:00 PM</span>
+              </div>
+              <div style={styles.metaItem}>
+                <span style={styles.metaLabel}>Price</span>
+                <span style={styles.metaValueAccent}>{concert.price}</span>
+              </div>
+            </div>
+            <div style={styles.ticketFooter}>
+              <div style={styles.barcode}>
+                {Array.from({ length: 30 }).map((_, i) => (
+                  <div key={i} style={{ ...styles.bar, width: i % 3 === 0 ? '3px' : '2px', opacity: i % 5 === 0 ? 0.4 : 1 }} />
+                ))}
+              </div>
+              <div style={styles.ticketNumber}>{ticketNumber}</div>
+            </div>
+          </div>
+
+          <img src={concert.imageUrl} alt="" style={styles.bgImage} />
         </div>
+
+        {/* Payment form */}
+        <form style={styles.form} onSubmit={handleSubmit}>
+          <p style={styles.formTitle}>Payment Details</p>
+
+          <div style={styles.formRow}>
+            <div style={styles.fieldGroup}>
+              <label style={styles.label}>Full Name</label>
+              <input style={styles.input} name="name" placeholder="John Doe" value={form.name} onChange={handleChange} required />
+            </div>
+            <div style={styles.fieldGroup}>
+              <label style={styles.label}>Email</label>
+              <input style={styles.input} name="email" type="email" placeholder="john@example.com" value={form.email} onChange={handleChange} required />
+            </div>
+          </div>
+
+          <div style={styles.fieldGroup}>
+            <label style={styles.label}>Card Number</label>
+            <input style={styles.input} name="card" placeholder="1234 5678 9012 3456" maxLength={19} value={form.card} onChange={handleChange} required />
+          </div>
+
+          <div style={styles.formRow}>
+            <div style={styles.fieldGroup}>
+              <label style={styles.label}>Expiry Date</label>
+              <input style={styles.input} name="expiry" placeholder="MM / YY" maxLength={7} value={form.expiry} onChange={handleChange} required />
+            </div>
+            <div style={styles.fieldGroup}>
+              <label style={styles.label}>CVV</label>
+              <input style={styles.input} name="cvv" placeholder="•••" maxLength={4} value={form.cvv} onChange={handleChange} required />
+            </div>
+          </div>
+
+          <div style={styles.formFooter}>
+            <div style={styles.total}>
+              <span style={styles.totalLabel}>Total</span>
+              <span style={styles.totalValue}>{concert.price}</span>
+            </div>
+            <button type="submit" style={styles.buyBtn} className="btn-primary">
+              🎟️ Complete Purchase
+            </button>
+          </div>
+        </form>
+
       </div>
     </div>
   );
