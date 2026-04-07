@@ -36,7 +36,6 @@ export default function ConcertDetails() {
       <div style={styles.heroWrap}>
         <img src={concert.imageUrl} alt={concert.title} style={styles.heroImage} />
         <div style={styles.heroOverlay} />
-<span style={styles.heroBadge}>🎟️ On Sale</span>
       </div>
 
       {/* Main content */}
