@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import Home from './pages/Home/Home';
-import BuyTickets from './pages/BuyTickets/BuyTickets';
+import BuyTickets, { BuyTicketsReturn } from './pages/BuyTickets/BuyTickets';
 import CreateConcert from './pages/CreateConcert/CreateConcert';
 import ConcertDetails from './pages/ConcertDetails/ConcertDetails';
 import Auth from './pages/Auth/Auth';
@@ -14,6 +14,7 @@ export default function AppRoutes() {
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/buy/:id" element={<BuyTickets />} />
+      <Route path="/return" element={<BuyTicketsReturn />} /> {/* New route for return page */}
       <Route path="/concert/:id" element={<ConcertDetails />} />
       <Route path="/auth" element={<Auth />} />
       <Route path="/my-orders" element={<MyOrders />} />
