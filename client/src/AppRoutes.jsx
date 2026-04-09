@@ -6,7 +6,8 @@ import ConcertDetails from './pages/ConcertDetails/ConcertDetails';
 import Auth from './pages/Auth/Auth';
 import MyOrders from './pages/MyOrders/MyOrders';
 import TicketView from './pages/TicketView/TicketView';
-import Admin from './pages/Admin/Admin';
+import ConcertList from './pages/ConcertList/ConcertList';
+import EditConcert from './pages/EditConcert/EditConcert';
 import Validator from './pages/Validator/Validator';
 
 export default function AppRoutes() {
@@ -19,7 +20,8 @@ export default function AppRoutes() {
       <Route path="/auth" element={<Auth />} />
       <Route path="/my-orders" element={<MyOrders />} />
       <Route path="/my-orders/:orderId" element={<TicketView />} />
-      <Route path="/admin" element={<Admin />} />
+      <Route path="/admin" element={<ConcertList />} />
+      <Route path="/edit/:id" element={<EditConcert />} />
       <Route path="/create" element={<CreateConcert />} />
       <Route path="/validator" element={<Validator />} />
     </Routes>

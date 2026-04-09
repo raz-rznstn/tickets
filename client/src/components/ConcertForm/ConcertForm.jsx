@@ -16,8 +16,8 @@ const EMPTY_FORM = {
   photography: '',
 };
 
-export default function ConcertForm() {
-  const [form, setForm] = useState(EMPTY_FORM);
+export default function ConcertForm({ initialValues, submitLabel = '🎟️ Publish Concert' }) {
+  const [form, setForm] = useState(initialValues || EMPTY_FORM);
   const [submitted, setSubmitted] = useState(false);
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
@@ -145,7 +145,7 @@ export default function ConcertForm() {
       </div>
 
       <button style={styles.submitBtn} className="btn-primary" type="submit">
-        🎟️ Publish Concert
+        {submitLabel}
       </button>
 
     </form>

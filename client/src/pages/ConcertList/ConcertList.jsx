@@ -1,14 +1,10 @@
 import { useNavigate } from 'react-router-dom';
 import { useGetConcertsList } from '../../services/api/hooks/useConcerts';
-import { styles } from './Admin.styles';
+import { styles } from './ConcertList.styles';
 
-export default function Admin() {
+export default function ConcertList() {
   const navigate = useNavigate();
   const { data: concerts = [], isLoading, error } = useGetConcertsList();
-
-  function handleEdit(concertId) {
-    // TODO: open edit form (modal or inline) with the concert's current data
-  }
 
   function handleDelete(concertId) {
     // TODO: call delete API then invalidate the concerts query
@@ -23,9 +19,8 @@ export default function Admin() {
         <div style={styles.header}>
           <div style={styles.headerLeft}>
             <p style={styles.eyebrow}>Management</p>
-            <h1 style={styles.heading}>Admin Dashboard</h1>
+            <h1 style={styles.heading}>Concert List</h1>
           </div>
-          {/* TODO: integrate CreateConcert form here (modal or inline) instead of navigating to /create */}
           <button style={styles.createBtn} onClick={() => navigate('/create')}>
             + Create Event
           </button>
@@ -56,7 +51,7 @@ export default function Admin() {
                     <td style={styles.tdAccent}>{concert.price}</td>
                     <td style={{ padding: 0 }}>
                       <div style={styles.actions}>
-                        <button style={styles.editBtn} onClick={() => handleEdit(concert.id)}>Edit</button>
+                        <button style={styles.editBtn} onClick={() => navigate(`/edit/${concert.id}`)}>Edit</button>
                         <button style={styles.deleteBtn} onClick={() => handleDelete(concert.id)}>Delete</button>
                       </div>
                     </td>
