@@ -12,11 +12,14 @@ export default function Navbar() {
           <span style={styles.logoPrimary}>Ticket</span>
           <span style={styles.logoSecondary}>Flow</span>
         </div>
-        {/* TODO: show role-based nav link once auth context is available */}
-        {/* admin        → /admin */}
-        {/* user         → /my-orders */}
-        {/* validator    → /validator */}
-        {/* login/logout → /auth */}
+        <div style={styles.links}>
+          <button style={{ ...styles.link, ...(pathname === '/admin' ? styles.linkActive : {}) }} onClick={() => navigate('/admin')}>
+            Concert List
+          </button>
+          <button style={{ ...styles.link, ...(pathname === '/validator' ? styles.linkActive : {}) }} onClick={() => navigate('/validator')}>
+            Validator
+          </button>
+        </div>
       </nav>
       {pathname !== '/' && (
         <button style={styles.backBtn} onClick={() => navigate(-1)}>← Back</button>

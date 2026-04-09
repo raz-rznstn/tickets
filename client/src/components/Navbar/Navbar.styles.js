@@ -30,6 +30,28 @@ export const styles = {
     fontSize: fontSize.md,
     cursor: 'pointer',
   },
+  links: {
+    display: 'flex',
+    gap: '4px',
+    alignItems: 'center',
+  },
+  link: {
+    background: 'none',
+    border: 'none',
+    color: colors.textSecondary,
+    fontSize: fontSize.sm,
+    fontWeight: fontWeight.semibold,
+    letterSpacing: '1.3px',
+    textTransform: 'uppercase',
+    cursor: 'pointer',
+    padding: '6px 14px',
+    borderRadius: borderRadius.sm,
+    transition: 'color 0.15s',
+  },
+  linkActive: {
+    color: colors.textPrimary,
+    backgroundColor: colors.borderSubtle,
+  },
   logo: {
     fontSize: fontSize.xl6,
     fontWeight: fontWeight.black,
