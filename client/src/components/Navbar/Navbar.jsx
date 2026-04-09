@@ -19,6 +19,9 @@ export default function Navbar() {
           <button style={{ ...styles.link, ...(pathname === '/validator' ? styles.linkActive : {}) }} onClick={() => navigate('/validator')}>
             Validator
           </button>
+          <button style={{ ...styles.link, ...(pathname === '/auth' ? styles.linkActive : {}) }} onClick={() => navigate('/auth')}>
+            Sign In
+          </button>
         </div>
       </nav>
       {pathname !== '/' && (
