@@ -8,6 +8,7 @@ const concerts = [
     price: '$49',
     doorsOpen: '7:00 PM',
     description: 'An explosive night of rock classics and new anthems. Rock Night Live brings together the biggest guitar riffs and pounding drums for a sold-out arena experience unlike any other.',
+    capacity: 20000,
     highlights: [
       { icon: '🎸', label: 'Genre', value: 'Rock' },
       { icon: '🏟️', label: 'Capacity', value: '20,000+' },
@@ -26,6 +27,7 @@ const concerts = [
     price: '$35',
     doorsOpen: '6:30 PM',
     description: 'A soulful evening of piano virtuosity set in the world-renowned Carnegie Hall. Experience timeless compositions performed live by award-winning pianists in an intimate acoustic setting.',
+    capacity: 2800,
     highlights: [
       { icon: '🎹', label: 'Genre', value: 'Classical' },
       { icon: '🏛️', label: 'Capacity', value: '2,800' },
@@ -44,6 +46,7 @@ const concerts = [
     price: '$28',
     doorsOpen: '8:00 PM',
     description: 'New York\'s most celebrated jazz festival returns to the legendary Blue Note. Expect smooth improvisations, late-night sessions, and a lineup of the finest jazz musicians on the planet.',
+    capacity: 500,
     highlights: [
       { icon: '🎷', label: 'Genre', value: 'Jazz' },
       { icon: '🏟️', label: 'Capacity', value: '500' },
@@ -62,6 +65,7 @@ const concerts = [
     price: '$60',
     doorsOpen: '7:30 PM',
     description: 'An enchanting symphonic performance at Lincoln Center featuring a full 80-piece orchestra. From Beethoven to modern film scores, this evening promises to move and inspire every audience member.',
+    capacity: 2700,
     highlights: [
       { icon: '🎻', label: 'Genre', value: 'Symphony' },
       { icon: '🏛️', label: 'Capacity', value: '2,700' },
@@ -80,6 +84,7 @@ const concerts = [
     price: '$75',
     doorsOpen: '7:00 PM',
     description: 'The biggest pop collaboration of the year brings together chart-topping artists for one mega night at Barclays Center. Expect dazzling production, surprise guests, and non-stop hit songs.',
+    capacity: 19000,
     highlights: [
       { icon: '🎤', label: 'Genre', value: 'Pop' },
       { icon: '🏟️', label: 'Capacity', value: '19,000+' },
@@ -98,6 +103,7 @@ const concerts = [
     price: '$40',
     doorsOpen: '10:00 PM',
     description: 'Brooklyn Mirage transforms into the ultimate open-air drum and bass arena. With world-class DJs, laser shows, and a state-of-the-art sound system, this is the night the underground has been waiting for.',
+    capacity: 5000,
     highlights: [
       { icon: '🎧', label: 'Genre', value: 'Drum & Bass' },
       { icon: '🏟️', label: 'Capacity', value: '5,000+' },

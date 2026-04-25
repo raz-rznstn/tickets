@@ -12,6 +12,32 @@ export const fetchConcertById = (id) =>
     return res.json();
   });
 
+export const deleteConcert = (id) =>
+  fetch(`${baseServerUrl}/concerts/${id}`, { method: 'DELETE' }).then((res) => {
+    if (!res.ok) throw new Error(`Server error ${res.status}`);
+    return res.json();
+  });
+
+export const createConcert = (data) =>
+  fetch(`${baseServerUrl}/concerts`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
+  }).then((res) => {
+    if (!res.ok) throw new Error(`Server error ${res.status}`);
+    return res.json();
+  });
+
+export const updateConcert = (id, data) =>
+  fetch(`${baseServerUrl}/concerts/${id}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
+  }).then((res) => {
+    if (!res.ok) throw new Error(`Server error ${res.status}`);
+    return res.json();
+  });
+
 export const fetchStats = () =>
   fetch(`${baseServerUrl}/stats`).then((res) => {
     if (!res.ok) throw new Error(`Server error ${res.status}`);
@@ -19,21 +45,18 @@ export const fetchStats = () =>
   });
 
 export const fetchMyOrders = () =>
-  // TODO: credentials: 'include' requires CORS to be configured on the server first
   fetch(`${baseServerUrl}/orders`, { credentials: 'include' }).then((res) => {
     if (!res.ok) throw new Error(`Server error ${res.status}`);
     return res.json();
   });
 
 export const fetchOrderById = (orderId) =>
-  // TODO: credentials: 'include' requires CORS to be configured on the server first
   fetch(`${baseServerUrl}/orders/${orderId}`, { credentials: 'include' }).then((res) => {
     if (!res.ok) throw new Error(`Server error ${res.status}`);
     return res.json();
   });
 
 export const validateTicket = ({ transactionId, lastFourDigits }) =>
-  // TODO: credentials: 'include' requires CORS to be configured on the server first
   fetch(`${baseServerUrl}/validator/validate`, {
     method: 'POST',
     credentials: 'include',

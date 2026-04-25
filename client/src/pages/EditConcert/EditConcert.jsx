@@ -27,7 +27,7 @@ export default function EditConcert() {
 
         {isLoading && <p style={styles.loading}>Loading concert…</p>}
         {error && <p style={styles.error}>Failed to load concert.</p>}
-        {concert && <ConcertForm initialValues={concert} submitLabel="💾 Save Changes" />}
+        {concert && <ConcertForm initialValues={concert} concertId={concert.id} submitLabel="💾 Save Changes" />}
       </div>
     </div>
   );

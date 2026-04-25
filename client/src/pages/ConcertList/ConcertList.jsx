@@ -1,17 +1,17 @@
 import { useNavigate } from 'react-router-dom';
 import { useGetConcertsList } from '../../services/api/hooks/useConcerts';
+import { useDeleteConcert } from '../../services/api/hooks/useDeleteConcert';
 import { styles } from './ConcertList.styles';
 
 export default function ConcertList() {
   const navigate = useNavigate();
   const { data: concerts = [], isLoading, error } = useGetConcertsList();
+  const deleteMutation = useDeleteConcert();
 
-  function handleDelete(concertId) {
-    // TODO: call delete API then invalidate the concerts query
+  function handleDelete(concertId, title) {
+    if (!window.confirm(`Delete "${title}"? This cannot be undone.`)) return;
+    deleteMutation.mutate(concertId);
   }
-
-  // TODO: handle loading state
-  // TODO: handle error state
 
   return (
     <div style={styles.page}>
@@ -26,6 +26,9 @@ export default function ConcertList() {
           </button>
         </div>
 
+        {isLoading && <p style={{ color: '#4A4A6A', padding: '2rem 0' }}>Loading concerts…</p>}
+        {error && <p style={{ color: '#FF2E63', padding: '2rem 0' }}>Failed to load concerts.</p>}
+
         <div style={styles.tableWrapper}>
           <table style={styles.table}>
             <thead style={styles.thead}>
@@ -38,7 +41,7 @@ export default function ConcertList() {
               </tr>
             </thead>
             <tbody>
-              {concerts.length === 0 ? (
+              {!isLoading && concerts.length === 0 ? (
                 <tr>
                   <td colSpan={5} style={styles.empty}>No events yet.</td>
                 </tr>
@@ -52,7 +55,13 @@ export default function ConcertList() {
                     <td style={{ padding: 0 }}>
                       <div style={styles.actions}>
                         <button style={styles.editBtn} onClick={() => navigate(`/edit/${concert.id}`)}>Edit</button>
-                        <button style={styles.deleteBtn} onClick={() => handleDelete(concert.id)}>Delete</button>
+                        <button
+                          style={styles.deleteBtn}
+                          onClick={() => handleDelete(concert.id, concert.title)}
+                          disabled={deleteMutation.isPending}
+                        >
+                          Delete
+                        </button>
                       </div>
                     </td>
                   </tr>

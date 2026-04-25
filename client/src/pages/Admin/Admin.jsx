@@ -1,21 +1,21 @@
 import { useNavigate } from 'react-router-dom';
 import { useGetConcertsList } from '../../services/api/hooks/useConcerts';
+import { useDeleteConcert } from '../../services/api/hooks/useDeleteConcert';
 import { styles } from './Admin.styles';
 
 export default function Admin() {
   const navigate = useNavigate();
   const { data: concerts = [], isLoading, error } = useGetConcertsList();
+  const deleteMutation = useDeleteConcert();
 
   function handleEdit(concertId) {
-    // TODO: open edit form (modal or inline) with the concert's current data
+    navigate(`/edit/${concertId}`);
   }
 
-  function handleDelete(concertId) {
-    // TODO: call delete API then invalidate the concerts query
+  function handleDelete(concertId, title) {
+    if (!window.confirm(`Delete "${title}"? This cannot be undone.`)) return;
+    deleteMutation.mutate(concertId);
   }
-
-  // TODO: handle loading state
-  // TODO: handle error state
 
   return (
     <div style={styles.page}>
@@ -25,11 +25,13 @@ export default function Admin() {
             <p style={styles.eyebrow}>Management</p>
             <h1 style={styles.heading}>Admin Dashboard</h1>
           </div>
-          {/* TODO: integrate CreateConcert form here (modal or inline) instead of navigating to /create */}
           <button style={styles.createBtn} onClick={() => navigate('/create')}>
             + Create Event
           </button>
         </div>
+
+        {isLoading && <p style={{ color: '#4A4A6A', padding: '2rem 0' }}>Loading concerts…</p>}
+        {error && <p style={{ color: '#FF2E63', padding: '2rem 0' }}>Failed to load concerts.</p>}
 
         <div style={styles.tableWrapper}>
           <table style={styles.table}>
@@ -43,7 +45,7 @@ export default function Admin() {
               </tr>
             </thead>
             <tbody>
-              {concerts.length === 0 ? (
+              {!isLoading && concerts.length === 0 ? (
                 <tr>
                   <td colSpan={5} style={styles.empty}>No events yet.</td>
                 </tr>
@@ -57,7 +59,13 @@ export default function Admin() {
                     <td style={{ padding: 0 }}>
                       <div style={styles.actions}>
                         <button style={styles.editBtn} onClick={() => handleEdit(concert.id)}>Edit</button>
-                        <button style={styles.deleteBtn} onClick={() => handleDelete(concert.id)}>Delete</button>
+                        <button
+                          style={styles.deleteBtn}
+                          onClick={() => handleDelete(concert.id, concert.title)}
+                          disabled={deleteMutation.isPending}
+                        >
+                          Delete
+                        </button>
                       </div>
                     </td>
                   </tr>

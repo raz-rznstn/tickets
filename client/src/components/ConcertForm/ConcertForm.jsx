@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { styles } from './ConcertForm.styles';
 import { styles as common } from '../../styles/common.styles';
+import { useCreateConcert } from '../../services/api/hooks/useCreateConcert';
+import { useUpdateConcert } from '../../services/api/hooks/useUpdateConcert';
 
 const EMPTY_FORM = {
   title: '',
@@ -16,15 +18,33 @@ const EMPTY_FORM = {
   photography: '',
 };
 
-export default function ConcertForm({ initialValues, submitLabel = '🎟️ Publish Concert' }) {
-  const [form, setForm] = useState(initialValues || EMPTY_FORM);
+function normalizeInitialValues(values) {
+  if (!values) return EMPTY_FORM;
+  return {
+    ...values,
+    price: values.price ? String(values.price).replace(/[^0-9.]/g, '') : '',
+    capacity: values.capacity ?? '',
+  };
+}
+
+export default function ConcertForm({ initialValues, concertId, submitLabel = '🎟️ Publish Concert' }) {
+  const [form, setForm] = useState(() => normalizeInitialValues(initialValues));
   const [submitted, setSubmitted] = useState(false);
+
+  const createMutation = useCreateConcert();
+  const updateMutation = useUpdateConcert(concertId);
+  const mutation = concertId ? updateMutation : createMutation;
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setSubmitted(true);
+    const payload = {
+      ...form,
+      price: form.price ? `$${form.price}` : form.price,
+      capacity: form.capacity ? Number(form.capacity) : undefined,
+    };
+    mutation.mutate(payload, { onSuccess: () => setSubmitted(true) });
   };
 
   if (submitted) {
@@ -71,11 +91,11 @@ export default function ConcertForm({ initialValues, submitLabel = '🎟️ Publ
         <div style={styles.row}>
           <div style={common.fieldGroup}>
             <label style={common.label}>Date</label>
-            <input style={common.input} type="date" name="date" value={form.date} onChange={handleChange} required />
+            <input style={common.input} type="text" name="date" placeholder="e.g. Apr 12, 2026" value={form.date} onChange={handleChange} required />
           </div>
           <div style={common.fieldGroup}>
             <label style={common.label}>Doors Open</label>
-            <input style={common.input} type="time" name="doorsOpen" value={form.doorsOpen} onChange={handleChange} required />
+            <input style={common.input} type="text" name="doorsOpen" placeholder="e.g. 7:00 PM" value={form.doorsOpen} onChange={handleChange} required />
           </div>
         </div>
         <div style={common.fieldGroup}>
@@ -144,8 +164,14 @@ export default function ConcertForm({ initialValues, submitLabel = '🎟️ Publ
         </div>
       </div>
 
-      <button style={styles.submitBtn} className="btn-primary" type="submit">
-        {submitLabel}
+      {mutation.isError && (
+        <p style={{ color: '#FF2E63', margin: '0 0 1rem' }}>
+          Failed to save: {mutation.error?.message}
+        </p>
+      )}
+
+      <button style={styles.submitBtn} className="btn-primary" type="submit" disabled={mutation.isPending}>
+        {mutation.isPending ? 'Saving…' : submitLabel}
       </button>
 
     </form>

@@ -94,7 +94,6 @@ export default function Home() {
             <ConcertCard
               key={concert.id || concert.title}
               concert={concert}
-              index={i}
               onClick={() => navigate(`/concert/${concert.id}`)}
             />
           ))}

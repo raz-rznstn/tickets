@@ -1,21 +1,158 @@
 const express = require('express');
 const router = express.Router();
-const { concerts } = require('../mock/concerts');
+const Concert = require('../db/models/Concert');
 
-router.get('/', (_req, res) => {
-  res.json(concerts);
+/**
+ * @openapi
+ * /concerts:
+ *   get:
+ *     summary: List all active concerts
+ *     tags: [Concerts]
+ *     responses:
+ *       200:
+ *         description: Array of concert objects
+ */
+router.get('/', async (_req, res) => {
+  try {
+    const concerts = await Concert.find({ deletedAt: null });
+    res.json(concerts);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch concerts' });
+  }
 });
 
-router.get('/:id', (req, res) => {
-  const concert = concerts.find((c) => c.id === req.params.id);
-  if (!concert) return res.status(404).json({ message: 'Concert not found' });
-  res.json(concert);
+/**
+ * @openapi
+ * /concerts/{id}:
+ *   get:
+ *     summary: Get a single concert by ID
+ *     tags: [Concerts]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Concert object
+ *       404:
+ *         description: Not found
+ */
+router.get('/:id', async (req, res) => {
+  try {
+    const concert = await Concert.findOne({ _id: req.params.id, deletedAt: null });
+    if (!concert) return res.status(404).json({ message: 'Concert not found' });
+    res.json(concert);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch concert' });
+  }
 });
 
-router.post('/', (req, res) => {
-  const concert = { ...req.body, id: Date.now() };
-  concerts.push(concert);
-  res.status(201).json(concert);
+/**
+ * @openapi
+ * /concerts:
+ *   post:
+ *     summary: Create a concert
+ *     tags: [Concerts]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required: [imageUrl, title, date, venue, price]
+ *             properties:
+ *               imageUrl:    { type: string }
+ *               title:       { type: string }
+ *               date:        { type: string }
+ *               venue:       { type: string }
+ *               price:       { type: string }
+ *               doorsOpen:   { type: string }
+ *               description: { type: string }
+ *     responses:
+ *       201:
+ *         description: Created concert
+ *       400:
+ *         description: Validation error
+ */
+router.post('/', async (req, res) => {
+  try {
+    const concert = await Concert.create(req.body);
+    res.status(201).json(concert);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
+/**
+ * @openapi
+ * /concerts/{id}:
+ *   put:
+ *     summary: Update a concert
+ *     tags: [Concerts]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *     responses:
+ *       200:
+ *         description: Updated concert
+ *       404:
+ *         description: Not found
+ */
+router.put('/:id', async (req, res) => {
+  try {
+    const concert = await Concert.findOneAndUpdate(
+      { _id: req.params.id, deletedAt: null },
+      req.body,
+      { new: true, runValidators: true }
+    );
+    if (!concert) return res.status(404).json({ message: 'Concert not found' });
+    res.json(concert);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
+/**
+ * @openapi
+ * /concerts/{id}:
+ *   delete:
+ *     summary: Soft-delete a concert
+ *     tags: [Concerts]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Concert soft-deleted
+ *       404:
+ *         description: Not found
+ */
+router.delete('/:id', async (req, res) => {
+  try {
+    const concert = await Concert.findOneAndUpdate(
+      { _id: req.params.id, deletedAt: null },
+      { deletedAt: new Date() },
+      { new: true }
+    );
+    if (!concert) return res.status(404).json({ message: 'Concert not found' });
+    res.json({ message: 'Concert deleted', concert });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to delete concert' });
+  }
 });
 
 module.exports = router;
