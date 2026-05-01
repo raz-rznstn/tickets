@@ -67,13 +67,14 @@ const fetchClientSecret = useCallback(() => {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      title: concert.title,
-      price: concert.price, 
+      title: concert?.title,
+      price: concert?.price,
+      concertId: concert?._id,
     }),
   })
     .then(res => res.json())
     .then(data => data.clientSecret);
-}, [concert]);
+}, [concert?.title, concert?.price, concert?._id]);
 
   if (isLoading) {
     return (

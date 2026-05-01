@@ -15,7 +15,7 @@ export default function AppRoutes() {
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/buy/:id" element={<BuyTickets />} />
-      <Route path="/return" element={<BuyTicketsReturn />} /> {/* New route for return page */}
+      <Route path="/return" element={<BuyTicketsReturn />} />
       <Route path="/concert/:id" element={<ConcertDetails />} />
       <Route path="/auth" element={<Auth />} />
       <Route path="/my-orders" element={<MyOrders />} />

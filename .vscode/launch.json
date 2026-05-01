@@ -1,0 +1,75 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Server (Node)",
+      "type": "node",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/server",
+      "runtimeExecutable": "${workspaceFolder}/server/node_modules/.bin/nodemon",
+      "args": ["index.js"],
+      "envFile": "${workspaceFolder}/server/.env",
+      "console": "integratedTerminal",
+      "preLaunchTask": "Start MongoDB"
+    },
+    {
+      "name": "Server with Seed (Node)",
+      "type": "node",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/server",
+      "runtimeExecutable": "${workspaceFolder}/server/node_modules/.bin/nodemon",
+      "args": ["index.js", "--seed"],
+      "envFile": "${workspaceFolder}/server/.env",
+      "console": "integratedTerminal",
+      "preLaunchTask": "Start MongoDB"
+    },
+    {
+      "name": "Client (Vite)",
+      "type": "node",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/client",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev"],
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "Build Client",
+      "type": "node",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/client",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "build"],
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "Install Server Deps",
+      "type": "node",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/server",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["install"],
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "Install Client Deps",
+      "type": "node",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/client",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["install"],
+      "console": "integratedTerminal"
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Full Stack (Server + Client)",
+      "configurations": ["Server (Node)", "Client (Vite)"],
+      "stopAll": true
+    },
+    {
+      "name": "Full Stack with Seed",
+      "configurations": ["Server with Seed (Node)", "Client (Vite)"],
+      "stopAll": true
+    }
+  ]
+}
