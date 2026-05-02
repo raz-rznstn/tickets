@@ -13,6 +13,7 @@ const orderSchema = new mongoose.Schema(
     title:           { type: String, required: true },
     customerEmail:   { type: String },
     stripeSessionId: { type: String, unique: true, required: true },
+    stripeLast4:     { type: String, required: true },
     tickets:         { type: [ticketSchema], default: [] },
     deletedAt:       { type: Date, default: null },
   },
