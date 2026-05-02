@@ -98,7 +98,7 @@ app.post('/api/create-checkout-session', async (req, res) => {
   if (!stripe) return stripeUnconfiguredResponse(res);
   try {
     const YOUR_DOMAIN = process.env.YOUR_DOMAIN || 'http://localhost:3000';
-    const { title, price, concertId } = req.body;
+    const { title, price, concertId, quantity = 1 } = req.body;
 
     const concert = await Concert.findById(concertId);
     if (concert?.capacity != null && concert.soldTickets >= concert.capacity) {
@@ -115,11 +115,11 @@ app.post('/api/create-checkout-session', async (req, res) => {
           unit_amount: amount,
           product_data: { name: title },
         },
-        quantity: 1,
+        quantity: quantity,
       }],
       mode: 'payment',
       return_url: `${YOUR_DOMAIN}/return?session_id={CHECKOUT_SESSION_ID}`,
-      metadata: { concertId, title },
+      metadata: { concertId, title, quantity: String(quantity) },
     });
 
     res.json({ clientSecret: session.client_secret });
@@ -153,17 +153,27 @@ app.get('/api/session-status', async (req, res) => {
     if (session.status === 'complete') {
       const existing = await Order.findOne({ stripeSessionId: session.id });
       if (!existing) {
-        const { concertId, title } = session.metadata;
-        const suffix = randomUUID().split('-')[0].toUpperCase();
+        const { concertId, title, quantity } = session.metadata;
+        const qty = parseInt(quantity) || 1;
+
+        const paymentIntent = await stripe.paymentIntents.retrieve(session.payment_intent, { expand: ['payment_method'] });
+        const stripeLast4 = paymentIntent.payment_method?.card?.last4;
+
         await Promise.all([
+          // save to DB
           Order.create({
             concertId,
             title,
             customerEmail: session.customer_details?.email || '',
             stripeSessionId: session.id,
-            tickets: [{ ticketId: `TF-${concertId}-${suffix}` }],
+            stripeLast4: stripeLast4,
+            tickets: Array.from({ length: qty }, () => {
+              const s = randomUUID().split('-')[0].toUpperCase();
+              return { ticketId: `TF-${concertId}-${s}` };
+            }),
           }),
-          Concert.findByIdAndUpdate(concertId, { $inc: { soldTickets: 1 } }),
+
+          Concert.findByIdAndUpdate(concertId, { $inc: { soldTickets: qty } }),
         ]);
       }
     }

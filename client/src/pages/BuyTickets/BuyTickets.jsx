@@ -1,9 +1,9 @@
 import { useState, useCallback, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
 import { loadStripe } from '@stripe/stripe-js';
 import { EmbeddedCheckoutProvider, EmbeddedCheckout } from '@stripe/react-stripe-js';
 import { styles } from './BuyTickets.styles';
 import { useGetConcert } from '../../services/api/hooks/useConcert';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 
 const stripePromise = loadStripe("pk_test_51TFD3IGfieNLbxlbjwAgxSZ4gQ0uYqZFjcIkokAqIpSTUCvBQ6LhTaecERVSRtXMU1FJyOWZWqQl5ekk492gkHC000aT6WhGTB");
 
@@ -61,20 +61,23 @@ export default function BuyTickets() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { data: concert, isLoading, error } = useGetConcert(id);
+  const location = useLocation();
+  const quantity = location.state?.quantity || 1;
 
-const fetchClientSecret = useCallback(() => {
-  return fetch('/api/create-checkout-session', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      title: concert?.title,
-      price: concert?.price,
-      concertId: concert?._id,
-    }),
-  })
-    .then(res => res.json())
-    .then(data => data.clientSecret);
-}, [concert?.title, concert?.price, concert?._id]);
+  const fetchClientSecret = useCallback(() => {
+    return fetch('/api/create-checkout-session', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        title: concert?.title,
+        price: concert?.price,
+        concertId: concert?._id,
+        quantity,
+      }),
+    })
+      .then(res => res.json())
+      .then(data => data.clientSecret);
+  }, [concert?.title, concert?.price, concert?._id]);
 
   if (isLoading) {
     return (
