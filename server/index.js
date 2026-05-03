@@ -8,7 +8,7 @@ const cors = require('cors');
 const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 const { randomUUID } = require('crypto');
-
+const path = require('path');
 const { connect } = require('./db/connection');
 const { seed } = require('./db/seed');
 const Concert = require('./db/models/Concert');
