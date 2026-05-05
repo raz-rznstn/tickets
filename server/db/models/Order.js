@@ -2,7 +2,10 @@ const mongoose = require('mongoose');
 const { randomUUID } = require('crypto');
 
 const ticketSchema = new mongoose.Schema(
-  { ticketId: { type: String, required: true } },
+  {
+    ticketId: { type: String, required: true },
+    status:   { type: String, enum: ['active', 'redeemed'], default: 'active' }
+  },
   { _id: false }
 );
 

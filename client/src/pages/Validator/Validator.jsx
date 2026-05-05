@@ -13,11 +13,22 @@ export default function Validator() {
   function handleScan() {
     // TODO: integrate QR scanner library
     // TODO: on successful scan, set transactionId with the decoded value from the QR code
+    // The scanned value should be in the format: stripeSessionId::ticketId
+    // setTransactionId(scannedValue);
   }
 
   function handleSubmit(e) {
     e.preventDefault();
-    // TODO: add input validation before submitting
+
+    if (!transactionId.includes('::')) {
+      alert('Invalid transaction ID format');
+      return;
+    }
+    if (!/^\d{4}$/.test(lastFourDigits)) {
+      alert('Last 4 digits must be exactly 4 numbers');
+      return;
+    }
+
     validate({ transactionId, lastFourDigits });
   }
 
@@ -75,7 +86,9 @@ export default function Validator() {
         {/* Result */}
         {data && (
           <div style={data.valid ? styles.resultValid : styles.resultInvalid}>
-            {data.valid ? '✓ Ticket is Valid' : '✗ Ticket is Invalid'}
+            {data.valid
+              ? `✓ Ticket is Valid${data.remaining > 0 ? ` — ${data.remaining} ticket(s) remaining` : ''}`
+              : `✗ Ticket is Invalid — ${data.reason}`}
           </div>
         )}
         {error && <div style={styles.resultError}>Error: {error.message}</div>}
