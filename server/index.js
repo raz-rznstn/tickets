@@ -17,6 +17,7 @@ const Order = require('./db/models/Order');
 const concertsRouter = require('./routes/concerts');
 const statsRouter = require('./routes/stats');
 const ordersRouter = require('./routes/orders');
+const validatorRouter = require('./routes/validator');
 
 const app = express();
 const PORT = process.env.PORT || 5010;
@@ -51,6 +52,7 @@ app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use('/api/concerts', concertsRouter);
 app.use('/api/stats', statsRouter);
 app.use('/api/orders', ordersRouter);
+app.use('/api/validator', validatorRouter);
 
 /**
  * @openapi
