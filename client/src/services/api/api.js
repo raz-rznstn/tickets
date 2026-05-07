@@ -1,4 +1,4 @@
-const baseServerUrl = 'http://localhost:5010/api';
+const baseServerUrl = '/api';
 
 export const fetchConcerts = () =>
   fetch(`${baseServerUrl}/concerts`).then((res) => {
