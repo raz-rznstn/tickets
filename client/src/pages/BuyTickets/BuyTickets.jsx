@@ -4,6 +4,7 @@ import { EmbeddedCheckoutProvider, EmbeddedCheckout } from '@stripe/react-stripe
 import { styles } from './BuyTickets.styles';
 import { useGetConcert } from '../../services/api/hooks/useConcert';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
+import TicketCard from '../../components/TicketCard/TicketCard';
 
 const stripePromise = loadStripe("pk_test_51TT5siLAOkyP8xoUYDmgThoaRcsCiha3Qa4UnBHvM0Nl3c7LnJ7rNjUsTocNEEEATXM7q42ae1W2zgXPQIDchOeH00R6f31Dcp");
 
@@ -11,6 +12,8 @@ const stripePromise = loadStripe("pk_test_51TT5siLAOkyP8xoUYDmgThoaRcsCiha3Qa4Un
 export function BuyTicketsReturn() {
   const [status, setStatus] = useState(null);
   const [customerEmail, setCustomerEmail] = useState('');
+  const [tickets, setTickets] = useState([]);
+  const [stripeSessionId, setStripeSessionId] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -20,6 +23,8 @@ export function BuyTicketsReturn() {
       .then(data => {
         setStatus(data.status);
         setCustomerEmail(data.customer_email);
+        setTickets(data.tickets || []);
+        setStripeSessionId(data.stripe_session_id || sessionId || '');
       });
   }, []);
 
@@ -32,18 +37,31 @@ export function BuyTicketsReturn() {
     <div style={styles.page}>
       <div style={styles.inner}>
         {status === 'complete' ? (
-          <div style={{ textAlign: 'center', padding: '6rem 2rem' }}>
+          <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <p style={styles.eyebrow}>Purchase Confirmed</p>
             <h1 style={styles.heading}>See you at the <span className="gradient-text">show.</span></h1>
-            <p style={{ color: '#4A4A6A', marginTop: '1rem' }}>
-              A confirmation will be sent to <strong>{customerEmail}</strong>.
+            <p style={{ color: '#4A4A6A', margin: '0 0 2rem' }}>
+              A confirmation will be sent to <strong>{customerEmail}</strong>. Show the QR code at entry.
             </p>
+
+            <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '24px' }}>
+              {tickets.map((t) => (
+                <TicketCard
+                  key={t.ticketId}
+                  title="Your Ticket"
+                  ticketId={t.ticketId}
+                  stripeSessionId={stripeSessionId}
+                  status={t.status}
+                />
+              ))}
+            </div>
+
             <button
-              onClick={() => navigate('/')} // Back to homepage
-              style={styles.buyBtn}
+              onClick={() => navigate('/my-orders')}
+              style={{ ...styles.buyBtn, marginTop: '32px' }}
               className="btn-primary"
             >
-              Back to Concerts
+              View My Orders
             </button>
           </div>
         ) : (

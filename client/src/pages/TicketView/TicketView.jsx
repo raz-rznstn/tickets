@@ -1,7 +1,6 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { useGetOrder } from '../../services/api/hooks/useOrder';
-
-// TODO: import styles once designed
+import TicketCard from '../../components/TicketCard/TicketCard';
 
 export default function TicketView() {
   const { orderId } = useParams();
@@ -9,27 +8,49 @@ export default function TicketView() {
 
   const { data: order, isLoading, error } = useGetOrder(orderId);
 
-  // TODO: handle loading state
-  // TODO: handle error / not found state
+  if (isLoading) {
+    return (
+      <div style={{ padding: '4rem 2rem', textAlign: 'center', color: '#4A4A6A' }}>
+        Loading ticket…
+      </div>
+    );
+  }
 
-  const tickets = order?.tickets ?? []; // one or more tickets per order
+  if (error || !order) {
+    return (
+      <div style={{ padding: '4rem 2rem', textAlign: 'center', color: '#4A4A6A' }}>
+        Order not found.{' '}
+        <button onClick={() => navigate('/my-orders')} style={{ color: '#FF2E63', background: 'none', border: 'none', cursor: 'pointer' }}>
+          Back to My Orders
+        </button>
+      </div>
+    );
+  }
+
+  const tickets = order.tickets ?? [];
 
   return (
-    <div>
-      <button onClick={() => navigate('/my-orders')}>← Back to My Orders</button>
+    <div style={{ maxWidth: '760px', margin: '0 auto', padding: '32px 24px' }}>
+      <button
+        onClick={() => navigate('/my-orders')}
+        style={{ background: 'none', border: 'none', color: '#FF2E63', cursor: 'pointer', marginBottom: '16px' }}
+      >
+        ← Back to My Orders
+      </button>
 
-      {/* TODO: show event title, date, venue as a header */}
-      <h1>{order?.title ?? orderId}</h1>
+      <h1 style={{ marginBottom: '24px' }}>{order.title ?? orderId}</h1>
 
-      <ul>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
         {tickets.map((ticket) => (
-          <li key={ticket.ticketId}>
-            {/* TODO: style each ticket as a ticket card (similar to BuyTickets ticket design) */}
-            {/* TODO: show seat, ticket number, barcode, QR code, etc. */}
-            <span>{ticket.ticketId}</span>
-          </li>
+          <TicketCard
+            key={ticket.ticketId}
+            title={order.title}
+            ticketId={ticket.ticketId}
+            stripeSessionId={order.stripeSessionId}
+            status={ticket.status}
+          />
         ))}
-      </ul>
+      </div>
     </div>
   );
 }

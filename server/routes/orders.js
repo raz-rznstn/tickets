@@ -43,7 +43,7 @@ router.get('/:orderId', async (req, res) => {
   try {
     const order = await Order.findOne(
       { orderId: req.params.orderId, deletedAt: null },
-      'orderId title tickets'
+      'orderId title tickets stripeSessionId'
     );
     if (!order) return res.status(404).json({ message: 'Order not found' });
     res.json(order);

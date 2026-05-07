@@ -1,21 +1,21 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { useValidateTicket } from '../../services/api/hooks/useValidateTicket';
 import { styles } from './Validator.styles';
 
 // TODO: wrap this page with ProtectedRoute role="validator" once auth context is implemented
 
 export default function Validator() {
+  const [searchParams] = useSearchParams();
   const [transactionId, setTransactionId] = useState('');
   const [lastFourDigits, setLastFourDigits] = useState('');
 
-  const { mutate: validate, data, isPending, error } = useValidateTicket();
+  useEffect(() => {
+    const fromUrl = searchParams.get('transaction_id');
+    if (fromUrl) setTransactionId(fromUrl);
+  }, [searchParams]);
 
-  function handleScan() {
-    // TODO: integrate QR scanner library
-    // TODO: on successful scan, set transactionId with the decoded value from the QR code
-    // The scanned value should be in the format: stripeSessionId::ticketId
-    // setTransactionId(scannedValue);
-  }
+  const { mutate: validate, data, isPending, error } = useValidateTicket();
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -39,18 +39,8 @@ export default function Validator() {
         <div style={styles.header}>
           <p style={styles.eyebrow}>Staff Portal</p>
           <h1 style={styles.heading}>Ticket Validator</h1>
-          <p style={styles.sub}>Scan a QR code or enter details manually.</p>
+          <p style={styles.sub}>Scan a ticket QR code or enter details manually.</p>
         </div>
-
-        {/* QR Scanner */}
-        <section style={styles.scanSection}>
-          <p style={styles.scanLabel}>QR Scanner</p>
-          <div style={styles.scanPlaceholder}>
-            {transactionId ? transactionId : 'Camera preview'}
-          </div>
-          <button style={styles.scanBtn} onClick={handleScan}>Scan QR Code</button>
-          {transactionId && <p style={styles.scannedId}>Scanned: {transactionId}</p>}
-        </section>
 
         {/* Manual input */}
         <form style={styles.form} onSubmit={handleSubmit}>

@@ -12,7 +12,8 @@
       "Bash(mv CreateConcert.jsx CreateConcert.styles.js CreateConcert/)",
       "Bash(find /c/Projects/project-mern/server -type f -name *route* -o -name *router*)",
       "Bash(xargs grep:*)",
-      "Bash(npm install:*)"
+      "Bash(npm install:*)",
+      "Bash(npm run *)"
     ]
   }
 }

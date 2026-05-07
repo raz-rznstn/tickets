@@ -152,6 +152,7 @@ app.get('/api/session-status', async (req, res) => {
   try {
     const session = await stripe.checkout.sessions.retrieve(req.query.session_id);
 
+    let order = null;
     if (session.status === 'complete') {
       const existing = await Order.findOne({ stripeSessionId: session.id });
       if (!existing) {
@@ -161,7 +162,7 @@ app.get('/api/session-status', async (req, res) => {
         const paymentIntent = await stripe.paymentIntents.retrieve(session.payment_intent, { expand: ['payment_method'] });
         const stripeLast4 = paymentIntent.payment_method?.card?.last4;
 
-        await Promise.all([
+        const [created] = await Promise.all([
           // save to DB
           Order.create({
             concertId,
@@ -177,12 +178,17 @@ app.get('/api/session-status', async (req, res) => {
 
           Concert.findByIdAndUpdate(concertId, { $inc: { soldTickets: qty } }),
         ]);
+        order = created;
+      } else {
+        order = existing;
       }
     }
 
     res.json({
       status: session.status,
       customer_email: session.customer_details?.email || null,
+      stripe_session_id: session.id,
+      tickets: order ? order.tickets.map(t => ({ ticketId: t.ticketId })) : [],
     });
   } catch (error) {
     console.error('Stripe session status error:', error);
