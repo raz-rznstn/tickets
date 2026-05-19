@@ -21,7 +21,7 @@ const validatorRouter = require('./routes/validator');
 
 const cookieParser = require('cookie-parser');
 const authRouter = require('./routes/auth');
-const { protect } = require('./middleware/auth');
+const { requireAuth, restrictTo } = require('./middleware/auth');
 
 const app = express();
 const PORT = process.env.PORT || 5010;
@@ -102,7 +102,7 @@ function stripeUnconfiguredResponse(res) {
  *       200:
  *         description: clientSecret for Stripe embedded checkout
  */
-app.post('/api/create-checkout-session', protect, async (req, res) => {
+app.post('/api/create-checkout-session', requireAuth, restrictTo('user'), async (req, res) => {
   if (!stripe) return stripeUnconfiguredResponse(res);
   try {
     const YOUR_DOMAIN = process.env.YOUR_DOMAIN || 'http://localhost:3000';
@@ -153,7 +153,7 @@ app.post('/api/create-checkout-session', protect, async (req, res) => {
  *       200:
  *         description: Session status and customer email
  */
-app.get('/api/session-status', protect, async (req, res) => {
+app.get('/api/session-status', requireAuth, restrictTo('user'), async (req, res) => {
   if (!stripe) return stripeUnconfiguredResponse(res);
   try {
     const session = await stripe.checkout.sessions.retrieve(req.query.session_id);

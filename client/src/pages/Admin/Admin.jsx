@@ -8,10 +8,6 @@ export default function Admin() {
   const { data: concerts = [], isLoading, error } = useGetConcertsList();
   const deleteMutation = useDeleteConcert();
 
-  function handleEdit(concertId) {
-    navigate(`/edit/${concertId}`);
-  }
-
   function handleDelete(concertId, title) {
     if (!window.confirm(`Delete "${title}"? This cannot be undone.`)) return;
     deleteMutation.mutate(concertId);
@@ -23,7 +19,7 @@ export default function Admin() {
         <div style={styles.header}>
           <div style={styles.headerLeft}>
             <p style={styles.eyebrow}>Management</p>
-            <h1 style={styles.heading}>Admin Dashboard</h1>
+            <h1 style={styles.heading}>Admin Panel</h1>
           </div>
           <button style={styles.createBtn} onClick={() => navigate('/create')}>
             + Create Event
@@ -58,7 +54,7 @@ export default function Admin() {
                     <td style={styles.tdAccent}>{concert.price}</td>
                     <td style={{ padding: 0 }}>
                       <div style={styles.actions}>
-                        <button style={styles.editBtn} onClick={() => handleEdit(concert.id)}>Edit</button>
+                        <button style={styles.editBtn} onClick={() => navigate(`/edit/${concert.id}`)}>Edit</button>
                         <button
                           style={styles.deleteBtn}
                           onClick={() => handleDelete(concert.id, concert.title)}

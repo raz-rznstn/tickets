@@ -18,18 +18,19 @@ export function AuthProvider({ children }) {
   const login = async (email, password) => {
     const data = await loginUser({ email, password });
     setUser(data.user);
+    return data.user;
   };
 
   const register = async (name, email, password) => {
     const data = await registerUser({ name, email, password });
     setUser(data.user);
+    return data.user;
   };
 
   const logout = async () => {
     await logoutUser();
     setUser(null);
-    setIsAuthenticated(false);
-};
+  };
 
   return (
     <AuthContext.Provider value={{
@@ -40,7 +41,7 @@ export function AuthProvider({ children }) {
       logout,
       isAuthenticated: !!user,
       isAdmin:         user?.role === 'admin',
-      isScanner:       user?.role === 'scanner',
+      isValidator:     user?.role === 'validator',
     }}>
       {children}
     </AuthContext.Provider>

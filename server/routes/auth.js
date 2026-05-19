@@ -1,7 +1,7 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const User = require('../db/models/User');
-const { protect } = require('../middleware/auth');
+const { requireAuth } = require('../middleware/auth');
 
 const router = express.Router();
 
@@ -16,7 +16,7 @@ const setTokenCookie = (res, token) => {
 
 const signToken = (id, role) =>
   jwt.sign({ id, role }, process.env.JWT_SECRET, {
-    expiresIn: role === 'scanner' ? '12h' : '7d',
+    expiresIn: role === 'validator' ? '12h' : '7d',
   });
 
 // POST /api/auth/register
@@ -73,7 +73,7 @@ router.post('/logout', (req, res) => {
 });
 
 // GET /api/auth/me — check active session on page refresh
-router.get('/me', protect, async (req, res) => {
+router.get('/me', requireAuth, async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
     if (!user) return res.status(404).json({ message: 'User not found' });

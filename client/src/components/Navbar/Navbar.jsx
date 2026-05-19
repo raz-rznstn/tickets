@@ -5,7 +5,7 @@ import { styles } from './Navbar.styles';
 export default function Navbar() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const { user, isAuthenticated, isAdmin, isScanner, logout } = useAuth();
+  const { user, isAuthenticated, isAdmin, isValidator, logout } = useAuth();
 
   const handleLogout = async () => {
     await logout();
@@ -26,11 +26,11 @@ export default function Navbar() {
               style={{ ...styles.link, ...(pathname === '/admin' ? styles.linkActive : {}) }}
               onClick={() => navigate('/admin')}
             >
-              Concert List
+              Admin Panel
             </button>
           )}
 
-          {(isAdmin || isScanner) && (
+          {isValidator && (
             <button
               style={{ ...styles.link, ...(pathname === '/validator' ? styles.linkActive : {}) }}
               onClick={() => navigate('/validator')}
@@ -39,7 +39,7 @@ export default function Navbar() {
             </button>
           )}
 
-          {isAuthenticated && !isScanner && !isAdmin && (
+          {isAuthenticated && !isValidator && !isAdmin && (
             <button
               style={{ ...styles.link, ...(pathname === '/my-orders' ? styles.linkActive : {}) }}
               onClick={() => navigate('/my-orders')}
@@ -50,7 +50,7 @@ export default function Navbar() {
 
           {isAuthenticated ? (
             <>
-              <span style={styles.link}>{user.name}</span>
+              <span style={styles.username}>{user.name}</span>
               <button style={styles.link} onClick={handleLogout}>
                 Sign Out
               </button>

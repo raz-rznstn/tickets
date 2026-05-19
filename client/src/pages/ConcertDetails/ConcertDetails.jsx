@@ -3,12 +3,15 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { styles } from './ConcertDetails.styles';
 import { styles as common } from '../../styles/common.styles';
 import { useGetConcert } from '../../services/api/hooks/useConcert';
+import { useAuth } from '../../context/AuthContext';
 
 export default function ConcertDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { data: concert, isLoading, error } = useGetConcert(id);
   const [quantity, setQuantity] = useState(1);
+  const { user } = useAuth();
+  const canBuy = !user || user.role === 'user';
 
   if (isLoading) {
     return (
@@ -91,14 +94,18 @@ export default function ConcertDetails() {
             <div style={styles.priceValue}>{concert.price}</div>
             <div style={styles.priceNote}>per person · includes all fees</div>
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1rem' }}>
-            <button onClick={() => setQuantity(q => Math.max(1, q - 1))} style={styles.buyBtn}>−</button>
-            <span>{quantity}</span>
-            <button onClick={() => setQuantity(q => q + 1)} style={styles.buyBtn}>+</button>
-          </div>
-          <button style={styles.buyBtn} className="btn-primary" onClick={() => navigate(`/buy/${id}`, { state: { quantity } })}>
-            🎟️ Buy Ticket Now
-          </button>
+          {canBuy && (
+            <>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1rem' }}>
+                <button onClick={() => setQuantity(q => Math.max(1, q - 1))} style={styles.buyBtn}>−</button>
+                <span>{quantity}</span>
+                <button onClick={() => setQuantity(q => q + 1)} style={styles.buyBtn}>+</button>
+              </div>
+              <button style={styles.buyBtn} className="btn-primary" onClick={() => navigate(`/buy/${id}`, { state: { quantity } })}>
+                🎟️ Buy Ticket Now
+              </button>
+            </>
+          )}
         </div>
       </div>
     </div>

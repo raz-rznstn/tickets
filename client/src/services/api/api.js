@@ -15,7 +15,10 @@ export const fetchConcertById = (id) =>
   });
 
 export const deleteConcert = (id) =>
-  fetch(`${baseServerUrl}/concerts/${id}`, { method: 'DELETE' }).then((res) => {
+  fetch(`${baseServerUrl}/concerts/${id}`, {
+    method: 'DELETE',
+    credentials: 'include',
+  }).then((res) => {
     if (!res.ok) throw new Error(`Server error ${res.status}`);
     return res.json();
   });
@@ -23,6 +26,7 @@ export const deleteConcert = (id) =>
 export const createConcert = (data) =>
   fetch(`${baseServerUrl}/concerts`, {
     method: 'POST',
+    credentials: 'include',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),
   }).then((res) => {
@@ -33,6 +37,7 @@ export const createConcert = (data) =>
 export const updateConcert = (id, data) =>
   fetch(`${baseServerUrl}/concerts/${id}`, {
     method: 'PUT',
+    credentials: 'include',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),
   }).then((res) => {
@@ -110,6 +115,27 @@ export const registerUser = ({ name, email, password }) =>
 export const logoutUser = () =>
   fetch(`${baseServerUrl}/auth/logout`, {
     method: 'POST',
+    credentials: 'include',
+  }).then((res) => {
+    if (!res.ok) throw new Error(`Server error ${res.status}`);
+    return res.json();
+  });
+
+// --- Stripe ---
+
+export const createCheckoutSession = (data) =>
+  fetch(`${baseServerUrl}/create-checkout-session`, {
+    method: 'POST',
+    credentials: 'include',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
+  }).then((res) => {
+    if (!res.ok) throw new Error(`Server error ${res.status}`);
+    return res.json();
+  });
+
+export const fetchSessionStatus = (sessionId) =>
+  fetch(`${baseServerUrl}/session-status?session_id=${sessionId}`, {
     credentials: 'include',
   }).then((res) => {
     if (!res.ok) throw new Error(`Server error ${res.status}`);

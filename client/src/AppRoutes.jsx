@@ -6,7 +6,7 @@ import ConcertDetails from './pages/ConcertDetails/ConcertDetails';
 import Auth from './pages/Auth/Auth';
 import MyOrders from './pages/MyOrders/MyOrders';
 import TicketView from './pages/TicketView/TicketView';
-import ConcertList from './pages/ConcertList/ConcertList';
+import Admin from './pages/Admin/Admin';
 import EditConcert from './pages/EditConcert/EditConcert';
 import Validator from './pages/Validator/Validator';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
@@ -16,26 +16,34 @@ export default function AppRoutes() {
     <Routes>
       {/* Public routes */}
       <Route path="/" element={<Home />} />
-      <Route path="/buy/:id" element={<BuyTickets />} />
-      <Route path="/return" element={<BuyTicketsReturn />} />
+      <Route path="/buy/:id" element={
+        <ProtectedRoute roles={['user']}>
+          <BuyTickets />
+        </ProtectedRoute>
+      } />
+      <Route path="/return" element={
+        <ProtectedRoute roles={['user']}>
+          <BuyTicketsReturn />
+        </ProtectedRoute>
+      } />
       <Route path="/concert/:id" element={<ConcertDetails />} />
       <Route path="/auth" element={<Auth />} />
 
       {/* User routes */}
       <Route path="/my-orders" element={
-        <ProtectedRoute roles={['admin', 'user']}>
+        <ProtectedRoute roles={['user']}>
           <MyOrders />
         </ProtectedRoute>
       } />
       <Route path="/my-orders/:orderId" element={
-        <ProtectedRoute roles={['admin', 'user']}>
+        <ProtectedRoute roles={['user']}>
           <TicketView />
         </ProtectedRoute>
       } />
 
-      {/* Scanner + admin routes */}
+      {/* Validator + admin routes */}
       <Route path="/validator" element={
-        <ProtectedRoute roles={['admin', 'scanner']}>
+        <ProtectedRoute roles={['validator']}>
           <Validator />
         </ProtectedRoute>
       } />
@@ -43,7 +51,7 @@ export default function AppRoutes() {
       {/* Admin only routes */}
       <Route path="/admin" element={
         <ProtectedRoute roles={['admin']}>
-          <ConcertList />
+          <Admin />
         </ProtectedRoute>
       } />
       <Route path="/edit/:id" element={
