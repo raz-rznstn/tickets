@@ -21,7 +21,7 @@ const validatorRouter = require('./routes/validator');
 
 const cookieParser = require('cookie-parser');
 const authRouter = require('./routes/auth');
-const { optionalAuth } = require('./middleware/auth');
+const { protect } = require('./middleware/auth');
 
 const app = express();
 const PORT = process.env.PORT || 5010;
@@ -102,7 +102,7 @@ function stripeUnconfiguredResponse(res) {
  *       200:
  *         description: clientSecret for Stripe embedded checkout
  */
-app.post('/api/create-checkout-session', optionalAuth, async (req, res) => {
+app.post('/api/create-checkout-session', protect, async (req, res) => {
   if (!stripe) return stripeUnconfiguredResponse(res);
   try {
     const YOUR_DOMAIN = process.env.YOUR_DOMAIN || 'http://localhost:3000';
@@ -153,14 +153,14 @@ app.post('/api/create-checkout-session', optionalAuth, async (req, res) => {
  *       200:
  *         description: Session status and customer email
  */
-app.get('/api/session-status', optionalAuth, async (req, res) => {
+app.get('/api/session-status', protect, async (req, res) => {
   if (!stripe) return stripeUnconfiguredResponse(res);
   try {
     const session = await stripe.checkout.sessions.retrieve(req.query.session_id);
 
     let order = null;
     if (session.status === 'complete') {
-      const existing = await Order.findOne({ stripeSessionId: session.id });
+      const existing = await Order.findOne({ stripeSessionId: session.id, userId: req.user?.id });
       if (!existing) {
         const { concertId, title, quantity } = session.metadata;
         const qty = parseInt(quantity) || 1;
@@ -173,7 +173,7 @@ app.get('/api/session-status', optionalAuth, async (req, res) => {
           Order.create({
             concertId,
             title,
-            userId: req.user?.id || null, 
+            userId: req.user?.id, 
             customerEmail: session.customer_details?.email || '',
             stripeSessionId: session.id,
             stripeLast4: stripeLast4,

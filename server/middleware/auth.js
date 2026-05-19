@@ -22,7 +22,7 @@ exports.restrictTo = (...roles) => (req, res, next) => {
 };
 
 // Attach user if token exists, continue either way (for guest-compatible routes)
-exports.optionalAuth = (req, res, next) => {
+exports.protect = (req, res, next) => {
   const token = req.cookies?.token;
   if (token) {
     try {
