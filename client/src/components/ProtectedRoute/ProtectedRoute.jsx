@@ -1,13 +1,14 @@
-import { Navigate } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 
 export default function ProtectedRoute({ children, roles }) {
   const { user, loading } = useAuth();
+  const location = useLocation();
 
-  // Wait for session check before making any redirect decision
   if (loading) return null;
 
-  if (!user) return <Navigate to="/auth" replace />;
+  if (!user)
+    return <Navigate to={`/auth?redirect=${encodeURIComponent(location.pathname)}`} replace />;
 
   if (roles && !roles.includes(user.role))
     return <Navigate to="/" replace />;

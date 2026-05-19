@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Concert = require('../db/models/Concert');
+const { requireAuth, restrictTo } = require('../middleware/auth');
 
 /**
  * @openapi
@@ -76,7 +77,7 @@ router.get('/:id', async (req, res) => {
  *       400:
  *         description: Validation error
  */
-router.post('/', async (req, res) => {
+router.post('/', requireAuth, restrictTo('admin'), async (req, res) => {
   try {
     const concert = await Concert.create(req.body);
     res.status(201).json(concert);
@@ -109,7 +110,7 @@ router.post('/', async (req, res) => {
  *       404:
  *         description: Not found
  */
-router.put('/:id', async (req, res) => {
+router.put('/:id', requireAuth, restrictTo('admin'), async (req, res) => {
   try {
     const concert = await Concert.findOneAndUpdate(
       { _id: req.params.id, deletedAt: null },
@@ -141,7 +142,7 @@ router.put('/:id', async (req, res) => {
  *       404:
  *         description: Not found
  */
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', requireAuth, restrictTo('admin'), async (req, res) => {
   try {
     const concert = await Concert.findOneAndUpdate(
       { _id: req.params.id, deletedAt: null },

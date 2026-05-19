@@ -8,13 +8,13 @@ const queryClient = new QueryClient();
 
 export default function Root() {
   return (
-    <AuthProvider>
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
-        <Navbar />
-        <AppRoutes />
+        <AuthProvider>
+          <Navbar />
+          <AppRoutes />
+        </AuthProvider>
       </BrowserRouter>
     </QueryClientProvider>
-    </AuthProvider>
   );
 }

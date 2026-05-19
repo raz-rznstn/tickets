@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { styles } from './Auth.styles';
 
@@ -9,9 +9,20 @@ export default function Auth() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const { login, register } = useAuth();
+  const { user, login, register } = useAuth();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const isLogin = mode === 'login';
+
+  const roleDefaultPath = (role) => {
+    if (role === 'admin') return '/admin';
+    if (role === 'validator') return '/validator';
+    return '/';
+  };
+
+  useEffect(() => {
+    if (user) navigate(searchParams.get('redirect') || roleDefaultPath(user.role), { replace: true });
+  }, [user]);
 
   const handleChange = (e) =>
     setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
@@ -21,12 +32,14 @@ export default function Auth() {
     setError('');
     setLoading(true);
     try {
+      let loggedInUser;
       if (isLogin) {
-        await login(formData.email, formData.password);
+        loggedInUser = await login(formData.email, formData.password);
       } else {
-        await register(formData.name, formData.email, formData.password);
+        loggedInUser = await register(formData.name, formData.email, formData.password);
       }
-      navigate('/');
+      const redirect = searchParams.get('redirect');
+      navigate(redirect || roleDefaultPath(loggedInUser.role), { replace: true });
     } catch (err) {
       setError(err.message || 'Something went wrong, please try again');
     } finally {

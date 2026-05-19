@@ -52,6 +52,14 @@ export const styles = {
     color: colors.textPrimary,
     backgroundColor: colors.borderSubtle,
   },
+  username: {
+    color: colors.textPrimary,
+    fontSize: fontSize.sm,
+    fontWeight: fontWeight.semibold,
+    letterSpacing: '1.3px',
+    textTransform: 'uppercase',
+    padding: '6px 14px',
+  },
   logo: {
     fontSize: fontSize.xl6,
     fontWeight: fontWeight.black,

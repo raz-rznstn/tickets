@@ -1,10 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const Order = require('../db/models/Order');
-const { protect } = require('../middleware/auth');
+const { requireAuth, restrictTo } = require('../middleware/auth');
 
-// GET /api/orders — admin sees all, user sees only their own
-router.get('/', protect, async (req, res) => {
+router.get('/', requireAuth, restrictTo('user'), async (req, res) => {
   try {
     const filter = { deletedAt: null, userId: req.user.id };
 
@@ -16,7 +15,7 @@ router.get('/', protect, async (req, res) => {
 });
 
 // GET /api/orders/:orderId — user can only access their own order
-router.get('/:orderId', protect, async (req, res) => {
+router.get('/:orderId', requireAuth, restrictTo('user'), async (req, res) => {
   try {
     const filter = { orderId: req.params.orderId, deletedAt: null, userId: req.user.id };
 

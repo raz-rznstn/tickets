@@ -34,17 +34,43 @@ async function seed() {
     console.log('[seed] Admin user already exists — skipping.');
   }
 
-  const scannerExists = await User.findOne({ email: 'scanner@ticketflow.com' });
-  if (!scannerExists) {
+  const user1Exists = await User.findOne({ email: 'alice@ticketflow.com' });
+  if (!user1Exists) {
     await User.create({
-      name: 'Scanner',
-      email: 'scanner@ticketflow.com',
-      password: 'Scanner1234!',
-      role: 'scanner',
+      name: 'Alice',
+      email: 'alice@ticketflow.com',
+      password: 'Alice1234!',
+      role: 'user',
     });
-    console.log('[seed] Scanner user created.');
+    console.log('[seed] User alice created.');
   } else {
-    console.log('[seed] Scanner user already exists — skipping.');
+    console.log('[seed] User alice already exists — skipping.');
+  }
+
+  const user2Exists = await User.findOne({ email: 'bob@ticketflow.com' });
+  if (!user2Exists) {
+    await User.create({
+      name: 'Bob',
+      email: 'bob@ticketflow.com',
+      password: 'Bob1234!',
+      role: 'user',
+    });
+    console.log('[seed] User bob created.');
+  } else {
+    console.log('[seed] User bob already exists — skipping.');
+  }
+
+  const validatorExists = await User.findOne({ email: 'validator@ticketflow.com' });
+  if (!validatorExists) {
+    await User.create({
+      name: 'Validator',
+      email: 'validator@ticketflow.com',
+      password: 'Validator1234!',
+      role: 'validator',
+    });
+    console.log('[seed] Validator user created.');
+  } else {
+    console.log('[seed] Validator user already exists — skipping.');
   }
 }
 

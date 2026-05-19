@@ -3,6 +3,7 @@ import { loadStripe } from '@stripe/stripe-js';
 import { EmbeddedCheckoutProvider, EmbeddedCheckout } from '@stripe/react-stripe-js';
 import { styles } from './BuyTickets.styles';
 import { useGetConcert } from '../../services/api/hooks/useConcert';
+import { createCheckoutSession, fetchSessionStatus } from '../../services/api/api';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import TicketCard from '../../components/TicketCard/TicketCard';
 
@@ -18,14 +19,12 @@ export function BuyTicketsReturn() {
 
   useEffect(() => {
     const sessionId = new URLSearchParams(window.location.search).get('session_id');
-    fetch(`/api/session-status?session_id=${sessionId}`)
-      .then(res => res.json())
-      .then(data => {
-        setStatus(data.status);
-        setCustomerEmail(data.customer_email);
-        setTickets(data.tickets || []);
-        setStripeSessionId(data.stripe_session_id || sessionId || '');
-      });
+    fetchSessionStatus(sessionId).then(data => {
+      setStatus(data.status);
+      setCustomerEmail(data.customer_email);
+      setTickets(data.tickets || []);
+      setStripeSessionId(data.stripe_session_id || sessionId || '');
+    });
   }, []);
 
   if (status === 'open') {
@@ -83,18 +82,12 @@ export default function BuyTickets() {
   const quantity = location.state?.quantity || 1;
 
   const fetchClientSecret = useCallback(() => {
-    return fetch('/api/create-checkout-session', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        title: concert?.title,
-        price: concert?.price,
-        concertId: concert?._id,
-        quantity,
-      }),
-    })
-      .then(res => res.json())
-      .then(data => data.clientSecret);
+    return createCheckoutSession({
+      title: concert?.title,
+      price: concert?.price,
+      concertId: concert?._id,
+      quantity,
+    }).then(data => data.clientSecret);
   }, [concert?.title, concert?.price, concert?._id]);
 
   if (isLoading) {

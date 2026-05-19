@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const Order = require('../db/models/Order');
-const { protect, restrictTo } = require('../middleware/auth');
+const { requireAuth, restrictTo } = require('../middleware/auth');
 
-// POST /api/validator/validate — admin and scanner only
-router.post('/validate', protect, restrictTo('admin', 'scanner'), async (req, res) => {
+// POST /api/validator/validate — admin and validator only
+router.post('/validate', requireAuth, restrictTo('validator'), async (req, res) => {
   const { transactionId, lastFourDigits } = req.body;
 
   if (!transactionId || !lastFourDigits)
