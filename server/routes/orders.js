@@ -1,50 +1,26 @@
 const express = require('express');
 const router = express.Router();
 const Order = require('../db/models/Order');
+const { protect } = require('../middleware/auth');
 
-/**
- * @openapi
- * /orders:
- *   get:
- *     summary: List all active orders
- *     tags: [Orders]
- *     responses:
- *       200:
- *         description: Array of { orderId, title }
- */
-router.get('/', async (_req, res) => {
+// GET /api/orders — admin sees all, user sees only their own
+router.get('/', protect, async (req, res) => {
   try {
-    const orders = await Order.find({ deletedAt: null }, 'orderId title');
+    const filter = { deletedAt: null, userId: req.user.id };
+
+    const orders = await Order.find(filter, 'orderId title createdAt tickets');
     res.json(orders);
   } catch (err) {
     res.status(500).json({ error: 'Failed to fetch orders' });
   }
 });
 
-/**
- * @openapi
- * /orders/{orderId}:
- *   get:
- *     summary: Get a single order by orderId
- *     tags: [Orders]
- *     parameters:
- *       - in: path
- *         name: orderId
- *         required: true
- *         schema:
- *           type: string
- *     responses:
- *       200:
- *         description: Order with tickets
- *       404:
- *         description: Not found
- */
-router.get('/:orderId', async (req, res) => {
+// GET /api/orders/:orderId — user can only access their own order
+router.get('/:orderId', protect, async (req, res) => {
   try {
-    const order = await Order.findOne(
-      { orderId: req.params.orderId, deletedAt: null },
-      'orderId title tickets stripeSessionId'
-    );
+    const filter = { orderId: req.params.orderId, deletedAt: null, userId: req.user.id };
+
+    const order = await Order.findOne(filter, 'orderId title tickets stripeSessionId');
     if (!order) return res.status(404).json({ message: 'Order not found' });
     res.json(order);
   } catch (err) {

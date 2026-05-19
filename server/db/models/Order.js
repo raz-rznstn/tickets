@@ -14,7 +14,8 @@ const orderSchema = new mongoose.Schema(
     orderId:         { type: String, unique: true, default: () => randomUUID() },
     concertId:       { type: mongoose.Schema.Types.ObjectId, ref: 'Concert', required: true },
     title:           { type: String, required: true },
-    customerEmail:   { type: String },
+    userId:          { type: mongoose.Schema.Types.ObjectId, ref: 'User', default: null },
+    customerEmail:   { type: String }, // email used for stripe checkout
     stripeSessionId: { type: String, unique: true, required: true },
     stripeLast4:     { type: String, required: true },
     tickets:         { type: [ticketSchema], default: [] },

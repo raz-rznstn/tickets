@@ -9,21 +9,53 @@ import TicketView from './pages/TicketView/TicketView';
 import ConcertList from './pages/ConcertList/ConcertList';
 import EditConcert from './pages/EditConcert/EditConcert';
 import Validator from './pages/Validator/Validator';
+import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 
 export default function AppRoutes() {
   return (
     <Routes>
+      {/* Public routes */}
       <Route path="/" element={<Home />} />
       <Route path="/buy/:id" element={<BuyTickets />} />
       <Route path="/return" element={<BuyTicketsReturn />} />
       <Route path="/concert/:id" element={<ConcertDetails />} />
       <Route path="/auth" element={<Auth />} />
-      <Route path="/my-orders" element={<MyOrders />} />
-      <Route path="/my-orders/:orderId" element={<TicketView />} />
-      <Route path="/admin" element={<ConcertList />} />
-      <Route path="/edit/:id" element={<EditConcert />} />
-      <Route path="/create" element={<CreateConcert />} />
-      <Route path="/validator" element={<Validator />} />
+
+      {/* User routes */}
+      <Route path="/my-orders" element={
+        <ProtectedRoute roles={['admin', 'user']}>
+          <MyOrders />
+        </ProtectedRoute>
+      } />
+      <Route path="/my-orders/:orderId" element={
+        <ProtectedRoute roles={['admin', 'user']}>
+          <TicketView />
+        </ProtectedRoute>
+      } />
+
+      {/* Scanner + admin routes */}
+      <Route path="/validator" element={
+        <ProtectedRoute roles={['admin', 'scanner']}>
+          <Validator />
+        </ProtectedRoute>
+      } />
+
+      {/* Admin only routes */}
+      <Route path="/admin" element={
+        <ProtectedRoute roles={['admin']}>
+          <ConcertList />
+        </ProtectedRoute>
+      } />
+      <Route path="/edit/:id" element={
+        <ProtectedRoute roles={['admin']}>
+          <EditConcert />
+        </ProtectedRoute>
+      } />
+      <Route path="/create" element={
+        <ProtectedRoute roles={['admin']}>
+          <CreateConcert />
+        </ProtectedRoute>
+      } />
     </Routes>
   );
 }

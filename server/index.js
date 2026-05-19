@@ -19,6 +19,10 @@ const statsRouter = require('./routes/stats');
 const ordersRouter = require('./routes/orders');
 const validatorRouter = require('./routes/validator');
 
+const cookieParser = require('cookie-parser');
+const authRouter = require('./routes/auth');
+const { optionalAuth } = require('./middleware/auth');
+
 const app = express();
 const PORT = process.env.PORT || 5010;
 
@@ -27,6 +31,7 @@ app.use(cors({
   credentials: true,
 }));
 app.use(express.json());
+app.use(cookieParser());
 
 // --- Swagger ---
 // Docs are generated from @openapi JSDoc annotations in route files and this file.
@@ -53,6 +58,7 @@ app.use('/api/concerts', concertsRouter);
 app.use('/api/stats', statsRouter);
 app.use('/api/orders', ordersRouter);
 app.use('/api/validator', validatorRouter);
+app.use('/api/auth', authRouter);
 
 /**
  * @openapi
@@ -96,7 +102,7 @@ function stripeUnconfiguredResponse(res) {
  *       200:
  *         description: clientSecret for Stripe embedded checkout
  */
-app.post('/api/create-checkout-session', async (req, res) => {
+app.post('/api/create-checkout-session', optionalAuth, async (req, res) => {
   if (!stripe) return stripeUnconfiguredResponse(res);
   try {
     const YOUR_DOMAIN = process.env.YOUR_DOMAIN || 'http://localhost:3000';
@@ -147,7 +153,7 @@ app.post('/api/create-checkout-session', async (req, res) => {
  *       200:
  *         description: Session status and customer email
  */
-app.get('/api/session-status', async (req, res) => {
+app.get('/api/session-status', optionalAuth, async (req, res) => {
   if (!stripe) return stripeUnconfiguredResponse(res);
   try {
     const session = await stripe.checkout.sessions.retrieve(req.query.session_id);
@@ -167,6 +173,7 @@ app.get('/api/session-status', async (req, res) => {
           Order.create({
             concertId,
             title,
+            userId: req.user?.id || null, 
             customerEmail: session.customer_details?.email || '',
             stripeSessionId: session.id,
             stripeLast4: stripeLast4,
