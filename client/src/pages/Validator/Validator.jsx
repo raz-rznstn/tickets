@@ -9,6 +9,7 @@ export default function Validator() {
   const [searchParams] = useSearchParams();
   const [transactionId, setTransactionId] = useState('');
   const [lastFourDigits, setLastFourDigits] = useState('');
+  const [redeemed, setRedeemed] = useState(false);
 
   useEffect(() => {
     const fromUrl = searchParams.get('transaction_id');
@@ -29,7 +30,11 @@ export default function Validator() {
       return;
     }
 
-    validate({ transactionId, lastFourDigits });
+    validate({ transactionId, lastFourDigits }, {
+      onSuccess: (data) => {
+        if (data.valid) setRedeemed(true);
+      }
+    });
   }
 
   return (
@@ -65,12 +70,12 @@ export default function Validator() {
             />
           </div>
           <button
-            type="submit"
-            style={{ ...styles.submitBtn, ...(isPending ? styles.submitBtnDisabled : {}) }}
-            disabled={isPending}
+          type="submit"
+          style={{ ...styles.submitBtn, ...(isPending || redeemed ? styles.submitBtnDisabled : {}) }}
+          disabled={isPending || redeemed}
           >
-            {isPending ? 'Validating…' : 'Validate Ticket'}
-          </button>
+            {isPending ? 'Validating…' : redeemed ? 'Ticket Redeemed' : 'Validate Ticket'}
+            </button>
         </form>
 
         {/* Result */}
