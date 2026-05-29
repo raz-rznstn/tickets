@@ -45,6 +45,20 @@ export const styles = {
     borderRadius: borderRadius.md,
     border: `1px solid ${colors.borderDefault}`,
   },
+  required: {
+    color: colors.primary,
+    marginLeft: '3px',
+  },
+  errorText: {
+    fontSize: fontSize.sm,
+    color: colors.primary,
+    marginTop: '4px',
+    letterSpacing: '0.5px',
+  },
+  inputError: {
+    borderColor: colors.primary,
+  },
+
   submitBtn: {
     background: `linear-gradient(135deg, ${colors.primary}, ${colors.primaryDark})`,
     color: colors.textWhite,

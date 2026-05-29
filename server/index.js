@@ -13,9 +13,9 @@ const { connect } = require('./db/connection');
 const { seed } = require('./db/seed');
 const Concert = require('./db/models/Concert');
 const Order = require('./db/models/Order');
+const User = require('./db/models/User');
 
 const concertsRouter = require('./routes/concerts');
-const statsRouter = require('./routes/stats');
 const ordersRouter = require('./routes/orders');
 const validatorRouter = require('./routes/validator');
 
@@ -55,7 +55,6 @@ app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // --- Routes ---
 app.use('/api/concerts', concertsRouter);
-app.use('/api/stats', statsRouter);
 app.use('/api/orders', ordersRouter);
 app.use('/api/validator', validatorRouter);
 app.use('/api/auth', authRouter);
@@ -108,7 +107,11 @@ app.post('/api/create-checkout-session', requireAuth, restrictTo('user'), async 
     const YOUR_DOMAIN = process.env.YOUR_DOMAIN || 'http://localhost:3000';
     const { title, price, concertId, quantity = 1 } = req.body;
 
-    const concert = await Concert.findById(concertId);
+    const [concert, user] = await Promise.all([
+      Concert.findById(concertId),
+      User.findById(req.user.id, 'email'),
+    ]);
+
     if (concert?.capacity != null && concert.soldTickets >= concert.capacity) {
       return res.status(409).json({ error: 'This concert is sold out.' });
     }
@@ -117,6 +120,7 @@ app.post('/api/create-checkout-session', requireAuth, restrictTo('user'), async 
 
     const session = await stripe.checkout.sessions.create({
       ui_mode: 'embedded_page',
+      customer_email: user?.email,
       line_items: [{
         price_data: {
           currency: 'usd',
@@ -168,13 +172,15 @@ app.get('/api/session-status', requireAuth, restrictTo('user'), async (req, res)
         const paymentIntent = await stripe.paymentIntents.retrieve(session.payment_intent, { expand: ['payment_method'] });
         const stripeLast4 = paymentIntent.payment_method?.card?.last4;
 
+        const orderUser = await User.findById(req.user.id, 'email');
+
         const [created] = await Promise.all([
           // save to DB
           Order.create({
             concertId,
             title,
-            userId: req.user?.id, 
-            customerEmail: session.customer_details?.email || '',
+            userId: req.user?.id,
+            customerEmail: orderUser?.email || '',
             stripeSessionId: session.id,
             stripeLast4: stripeLast4,
             tickets: Array.from({ length: qty }, () => {

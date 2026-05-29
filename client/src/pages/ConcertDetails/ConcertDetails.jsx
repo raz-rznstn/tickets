@@ -119,16 +119,14 @@ export default function ConcertDetails() {
             <div style={styles.priceNote}>per person · includes all fees</div>
           </div>
           {canBuy && (
-            <>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1rem' }}>
-                <button onClick={() => setQuantity(q => Math.max(1, q - 1))} style={styles.buyBtn}>−</button>
-                <span>{quantity}</span>
-                <button onClick={() => setQuantity(q => q + 1)} style={styles.buyBtn}>+</button>
-              </div>
+            <div style={styles.qtyControls}>
+              <button onClick={() => setQuantity(q => Math.max(1, q - 1))} style={styles.qtyBtn}>−</button>
+              <span style={styles.qtyValue}>{quantity}</span>
+              <button onClick={() => setQuantity(q => q + 1)} style={styles.qtyBtn}>+</button>
               <button style={styles.buyBtn} className="btn-primary" onClick={() => navigate(`/buy/${id}`, { state: { quantity } })}>
-                🎟️ Buy Ticket Now
+                Buy Now
               </button>
-            </>
+            </div>
           )}
           {isSoldOut && (!user || user.role === 'user') && (
             <div style={styles.soldOutTag}>Sold Out</div>

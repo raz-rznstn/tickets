@@ -45,14 +45,6 @@ export const updateConcert = (id, data) =>
     return res.json();
   });
 
-// --- Stats ---
-
-export const fetchStats = () =>
-  fetch(`${baseServerUrl}/stats`).then((res) => {
-    if (!res.ok) throw new Error(`Server error ${res.status}`);
-    return res.json();
-  });
-
 // --- Orders ---
 
 export const fetchMyOrders = () =>

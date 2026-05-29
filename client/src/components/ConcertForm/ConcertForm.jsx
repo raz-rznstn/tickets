@@ -71,20 +71,52 @@ function normalizeInitialValues(values) {
   };
 }
 
+const REQUIRED_FIELDS = {
+  title:     'Concert title is required',
+  venue:     'Venue is required',
+  date:      'Date is required',
+  doorsOpen: 'Doors open time is required',
+  price:     'Ticket price is required',
+  genre:     'Genre is required',
+  capacity:  'Capacity is required',
+  ageLimit:  'Age limit is required',
+};
+
+function validate(form) {
+  const errors = {};
+  Object.entries(REQUIRED_FIELDS).forEach(([field, message]) => {
+    if (!form[field] || String(form[field]).trim() === '') {
+      errors[field] = message;
+    }
+  });
+  return errors;
+}
+
 const pickerInput = { colorScheme: 'dark' };
+
+const Req = () => <span style={styles.required}>*</span>;
 
 export default function ConcertForm({ initialValues, concertId, submitLabel = 'ðŸŽŸï¸ Publish Concert' }) {
   const [form, setForm] = useState(() => normalizeInitialValues(initialValues));
+  const [errors, setErrors] = useState({});
   const [submitted, setSubmitted] = useState(false);
 
   const createMutation = useCreateConcert();
   const updateMutation = useUpdateConcert(concertId);
   const mutation = concertId ? updateMutation : createMutation;
 
-  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+    if (errors[e.target.name]) setErrors({ ...errors, [e.target.name]: '' });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const validationErrors = validate(form);
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
     const payload = {
       ...form,
       price: form.price ? `$${form.price}` : form.price,
@@ -94,6 +126,11 @@ export default function ConcertForm({ initialValues, concertId, submitLabel = 'ð
     };
     mutation.mutate(payload, { onSuccess: () => setSubmitted(true) });
   };
+
+  const inp = (field) => ({
+    ...common.input,
+    ...(errors[field] ? styles.inputError : {}),
+  });
 
   if (submitted) {
     return (
@@ -109,18 +146,19 @@ export default function ConcertForm({ initialValues, concertId, submitLabel = 'ð
   }
 
   return (
-    <form style={styles.form} onSubmit={handleSubmit}>
+    <form style={styles.form} onSubmit={handleSubmit} noValidate>
 
       {/* Section: Basic Info */}
       <div style={styles.section}>
         <p style={styles.sectionLabel}>Basic Info</p>
         <div style={common.fieldGroup}>
-          <label style={common.label}>Concert Title</label>
-          <input style={common.input} name="title" placeholder="e.g. Rock Night Live" value={form.title} onChange={handleChange} required />
+          <label style={common.label}>Concert Title <Req /></label>
+          <input style={inp('title')} name="title" placeholder="e.g. Rock Night Live" value={form.title} onChange={handleChange} />
+          {errors.title && <span style={styles.errorText}>{errors.title}</span>}
         </div>
         <div style={common.fieldGroup}>
           <label style={common.label}>Cover Image URL</label>
-          <input style={common.input} name="imageUrl" placeholder="https://..." value={form.imageUrl} onChange={handleChange} required />
+          <input style={common.input} name="imageUrl" placeholder="https://..." value={form.imageUrl} onChange={handleChange} />
         </div>
         {form.imageUrl && (
           <img src={form.imageUrl} alt="preview" style={styles.imagePreview} onError={(e) => { e.target.style.display = 'none'; }} />
@@ -133,22 +171,26 @@ export default function ConcertForm({ initialValues, concertId, submitLabel = 'ð
       <div style={styles.section}>
         <p style={styles.sectionLabel}>When & Where</p>
         <div style={common.fieldGroup}>
-          <label style={common.label}>Venue</label>
-          <input style={common.input} name="venue" placeholder="e.g. Madison Square Garden" value={form.venue} onChange={handleChange} required />
+          <label style={common.label}>Venue <Req /></label>
+          <input style={inp('venue')} name="venue" placeholder="e.g. Madison Square Garden" value={form.venue} onChange={handleChange} />
+          {errors.venue && <span style={styles.errorText}>{errors.venue}</span>}
         </div>
         <div style={styles.row}>
           <div style={common.fieldGroup}>
-            <label style={common.label}>Date</label>
-            <input style={{ ...common.input, ...pickerInput }} type="date" name="date" value={form.date} onChange={handleChange} required />
+            <label style={common.label}>Date <Req /></label>
+            <input style={{ ...inp('date'), ...pickerInput }} type="date" name="date" value={form.date} onChange={handleChange} />
+            {errors.date && <span style={styles.errorText}>{errors.date}</span>}
           </div>
           <div style={common.fieldGroup}>
-            <label style={common.label}>Doors Open</label>
-            <input style={{ ...common.input, ...pickerInput }} type="time" name="doorsOpen" value={form.doorsOpen} onChange={handleChange} required />
+            <label style={common.label}>Doors Open <Req /></label>
+            <input style={{ ...inp('doorsOpen'), ...pickerInput }} type="time" name="doorsOpen" value={form.doorsOpen} onChange={handleChange} />
+            {errors.doorsOpen && <span style={styles.errorText}>{errors.doorsOpen}</span>}
           </div>
         </div>
         <div style={common.fieldGroup}>
-          <label style={common.label}>Ticket Price ($)</label>
-          <input style={common.input} type="number" name="price" placeholder="e.g. 49" min="0" value={form.price} onChange={handleChange} required />
+          <label style={common.label}>Ticket Price ($) <Req /></label>
+          <input style={inp('price')} type="number" name="price" placeholder="e.g. 49" min="0" value={form.price} onChange={handleChange} />
+          {errors.price && <span style={styles.errorText}>{errors.price}</span>}
         </div>
       </div>
 
@@ -159,7 +201,7 @@ export default function ConcertForm({ initialValues, concertId, submitLabel = 'ð
         <p style={styles.sectionLabel}>About the Event</p>
         <div style={common.fieldGroup}>
           <label style={common.label}>Description</label>
-          <textarea style={styles.textarea} name="description" placeholder="Describe the experience, lineup, and what makes this event special..." value={form.description} onChange={handleChange} required rows={4} />
+          <textarea style={styles.textarea} name="description" placeholder="Describe the experience, lineup, and what makes this event special..." value={form.description} onChange={handleChange} rows={4} />
         </div>
       </div>
 
@@ -170,8 +212,8 @@ export default function ConcertForm({ initialValues, concertId, submitLabel = 'ð
         <p style={styles.sectionLabel}>Event Details</p>
         <div style={styles.row}>
           <div style={common.fieldGroup}>
-            <label style={common.label}>Genre</label>
-            <select style={common.input} name="genre" value={form.genre} onChange={handleChange} required>
+            <label style={common.label}>Genre <Req /></label>
+            <select style={inp('genre')} name="genre" value={form.genre} onChange={handleChange}>
               <option value="">Select genre</option>
               <option>Rock</option>
               <option>Pop</option>
@@ -185,21 +227,24 @@ export default function ConcertForm({ initialValues, concertId, submitLabel = 'ð
               <option>R&B</option>
               <option>Other</option>
             </select>
+            {errors.genre && <span style={styles.errorText}>{errors.genre}</span>}
           </div>
           <div style={common.fieldGroup}>
-            <label style={common.label}>Capacity</label>
-            <input style={common.input} type="number" name="capacity" placeholder="e.g. 5000" min="1" value={form.capacity} onChange={handleChange} required />
+            <label style={common.label}>Capacity <Req /></label>
+            <input style={inp('capacity')} type="number" name="capacity" placeholder="e.g. 5000" min="1" value={form.capacity} onChange={handleChange} />
+            {errors.capacity && <span style={styles.errorText}>{errors.capacity}</span>}
           </div>
         </div>
         <div style={common.fieldGroup}>
-          <label style={common.label}>Age Limit</label>
-          <select style={common.input} name="ageLimit" value={form.ageLimit} onChange={handleChange} required>
+          <label style={common.label}>Age Limit <Req /></label>
+          <select style={inp('ageLimit')} name="ageLimit" value={form.ageLimit} onChange={handleChange}>
             <option value="">Select</option>
             <option>All Ages</option>
             <option>16+</option>
             <option>18+</option>
             <option>21+</option>
           </select>
+          {errors.ageLimit && <span style={styles.errorText}>{errors.ageLimit}</span>}
         </div>
       </div>
 

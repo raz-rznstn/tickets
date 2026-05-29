@@ -108,6 +108,11 @@ export default function BuyTickets() {
     );
   }
 
+  if (!isLoading && concert?.availableSeats === 0) {
+    navigate(`/concert/${id}`, { replace: true });
+    return null;
+  }
+
   if (error || !concert) {
     return (
       <div style={styles.page}>
