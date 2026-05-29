@@ -115,6 +115,18 @@ export const styles = {
     color: colors.textPrimary,
   },
 
+  soldOutTag: {
+    fontSize: fontSize.xl2,
+    fontWeight: fontWeight.bold,
+    color: colors.primary,
+    border: `1px solid ${colors.primaryBorder}`,
+    backgroundColor: colors.primaryBg,
+    borderRadius: borderRadius.lg,
+    padding: '14px 32px',
+    letterSpacing: '1.6px',
+    textTransform: 'uppercase',
+  },
+
   buySection: {
     backgroundColor: colors.bgCard,
     border: `1px solid ${colors.borderDefault}`,

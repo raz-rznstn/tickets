@@ -87,6 +87,24 @@ export const styles = {
     color: colors.primary,
     fontWeight: fontWeight.bold,
   },
+  tdTickets: {
+    padding: '16px 20px',
+    fontSize: fontSize.xl,
+    color: colors.textSecondary,
+    fontWeight: fontWeight.semibold,
+  },
+  tdTicketsWarning: {
+    padding: '16px 20px',
+    fontSize: fontSize.xl,
+    color: '#F59E0B',
+    fontWeight: fontWeight.semibold,
+  },
+  tdTicketsSoldOut: {
+    padding: '16px 20px',
+    fontSize: fontSize.xl,
+    color: colors.primary,
+    fontWeight: fontWeight.bold,
+  },
   actions: {
     display: 'flex',
     gap: '8px',

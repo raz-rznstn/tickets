@@ -191,10 +191,22 @@ app.get('/api/session-status', requireAuth, restrictTo('user'), async (req, res)
       }
     }
 
+    const { concertId, title } = session.metadata ?? {};
+    let date = null;
+    let venue = null;
+    if (concertId) {
+      const concert = await Concert.findById(concertId, 'date venue');
+      date = concert?.date ?? null;
+      venue = concert?.venue ?? null;
+    }
+
     res.json({
       status: session.status,
       customer_email: session.customer_details?.email || null,
       stripe_session_id: session.id,
+      title: title ?? null,
+      date,
+      venue,
       tickets: order ? order.tickets.map(t => ({ ticketId: t.ticketId })) : [],
     });
   } catch (error) {
