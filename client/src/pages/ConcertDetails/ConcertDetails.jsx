@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { styles } from './ConcertDetails.styles';
 import { styles as common } from '../../styles/common.styles';
+import { colors } from '../../styles/tokens';
 import { useGetConcert } from '../../services/api/hooks/useConcert';
 import { useAuth } from '../../context/AuthContext';
 
@@ -11,7 +12,8 @@ export default function ConcertDetails() {
   const { data: concert, isLoading, error } = useGetConcert(id);
   const [quantity, setQuantity] = useState(1);
   const { user } = useAuth();
-  const canBuy = !user || user.role === 'user';
+  const isSoldOut = concert?.capacity != null && concert?.availableSeats === 0;
+  const canBuy = (!user || user.role === 'user') && !isSoldOut;
 
   if (isLoading) {
     return (
@@ -73,17 +75,39 @@ export default function ConcertDetails() {
         <div style={styles.sectionLabel}>About This Event</div>
         <p style={styles.aboutText}>{concert.description}</p>
 
-        {/* Highlights */}
-        <div style={styles.sectionLabel}>Event Highlights</div>
-        <div style={styles.highlights}>
-          {concert.highlights.map((h) => (
-            <div key={h.label} style={styles.highlightCard}>
-              <div style={styles.highlightIcon}>{h.icon}</div>
-              <div style={styles.highlightLabel}>{h.label}</div>
-              <div style={styles.highlightValue}>{h.value}</div>
+        {/* Event Details */}
+        {(concert.genre || concert.ageLimit || concert.capacity != null) && (
+          <>
+            <div style={styles.sectionLabel}>Event Details</div>
+            <div style={styles.highlights}>
+              {concert.genre && (
+                <div style={styles.highlightCard}>
+                  <div style={styles.highlightIcon}>🎵</div>
+                  <div style={styles.highlightLabel}>Genre</div>
+                  <div style={styles.highlightValue}>{concert.genre}</div>
+                </div>
+              )}
+              {concert.ageLimit && (
+                <div style={styles.highlightCard}>
+                  <div style={styles.highlightIcon}>👥</div>
+                  <div style={styles.highlightLabel}>Age Limit</div>
+                  <div style={styles.highlightValue}>{concert.ageLimit}</div>
+                </div>
+              )}
+              {concert.capacity != null && (
+                <div style={styles.highlightCard}>
+                  <div style={styles.highlightIcon}>🎟️</div>
+                  <div style={styles.highlightLabel}>Availability</div>
+                  <div style={{ ...styles.highlightValue, color: concert.availableSeats === 0 ? colors.primary : colors.textPrimary }}>
+                    {concert.availableSeats === 0
+                      ? 'Sold Out'
+                      : `${concert.availableSeats.toLocaleString()} / ${concert.capacity.toLocaleString()}`}
+                  </div>
+                </div>
+              )}
             </div>
-          ))}
-        </div>
+          </>
+        )}
 
         <div style={styles.divider} />
 
@@ -95,16 +119,17 @@ export default function ConcertDetails() {
             <div style={styles.priceNote}>per person · includes all fees</div>
           </div>
           {canBuy && (
-            <>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1rem' }}>
-                <button onClick={() => setQuantity(q => Math.max(1, q - 1))} style={styles.buyBtn}>−</button>
-                <span>{quantity}</span>
-                <button onClick={() => setQuantity(q => q + 1)} style={styles.buyBtn}>+</button>
-              </div>
+            <div style={styles.qtyControls}>
+              <button onClick={() => setQuantity(q => Math.max(1, q - 1))} style={styles.qtyBtn}>−</button>
+              <span style={styles.qtyValue}>{quantity}</span>
+              <button onClick={() => setQuantity(q => q + 1)} style={styles.qtyBtn}>+</button>
               <button style={styles.buyBtn} className="btn-primary" onClick={() => navigate(`/buy/${id}`, { state: { quantity } })}>
-                🎟️ Buy Ticket Now
+                Buy Now
               </button>
-            </>
+            </div>
+          )}
+          {isSoldOut && (!user || user.role === 'user') && (
+            <div style={styles.soldOutTag}>Sold Out</div>
           )}
         </div>
       </div>

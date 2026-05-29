@@ -37,6 +37,7 @@ export default function Admin() {
                 <th style={styles.th}>Date</th>
                 <th style={styles.th}>Venue</th>
                 <th style={styles.th}>Price</th>
+                <th style={styles.th}>Tickets</th>
                 <th style={styles.th}>Actions</th>
               </tr>
             </thead>
@@ -52,6 +53,18 @@ export default function Admin() {
                     <td style={styles.tdMuted}>{concert.date}</td>
                     <td style={styles.tdMuted}>{concert.venue}</td>
                     <td style={styles.tdAccent}>{concert.price}</td>
+                    <td style={
+                      concert.capacity == null ? styles.tdTickets :
+                      concert.availableSeats === 0 ? styles.tdTicketsSoldOut :
+                      concert.soldTickets / concert.capacity >= 0.8 ? styles.tdTicketsWarning :
+                      styles.tdTickets
+                    }>
+                      {concert.capacity == null
+                        ? `${concert.soldTickets ?? 0} sold`
+                        : concert.availableSeats === 0
+                          ? 'Sold Out'
+                          : `${concert.soldTickets ?? 0} / ${concert.capacity}`}
+                    </td>
                     <td style={{ padding: 0 }}>
                       <div style={styles.actions}>
                         <button style={styles.editBtn} onClick={() => navigate(`/edit/${concert.id}`)}>Edit</button>

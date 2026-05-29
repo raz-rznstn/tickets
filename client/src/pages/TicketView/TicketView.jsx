@@ -45,6 +45,8 @@ export default function TicketView() {
           <TicketCard
             key={ticket.ticketId}
             title={order.title}
+            date={order.date}
+            venue={order.venue}
             ticketId={ticket.ticketId}
             stripeSessionId={order.stripeSessionId}
             status={ticket.status}

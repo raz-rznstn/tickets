@@ -90,12 +90,6 @@ body {
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
-.gradient-text-stats {
-  background: linear-gradient(135deg, #FF2E63, #08D9D6);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
 
 /* --- Ambient glow blobs --- */
 .glow-blob-pink {

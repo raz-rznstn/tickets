@@ -5,7 +5,6 @@ import { styles as common } from '../../styles/common.styles';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import ConcertCard from '../../components/ConcertCard/ConcertCard';
 import { useGetConcertsList } from '../../services/api/hooks/useConcerts';
-import { useGetStats } from '../../services/api/hooks/useGetStats';
 
 export default function Home() {
   const navigate = useNavigate();
@@ -13,8 +12,6 @@ export default function Home() {
   const [submitted, setSubmitted] = useState(false);
 
   const { data: concerts = [], isLoading } = useGetConcertsList();
-  const { data: stats = [] } = useGetStats();
-
   const results = concerts.filter((c) =>
     c.title.toLowerCase().includes(query.toLowerCase()) ||
     c.venue.toLowerCase().includes(query.toLowerCase())
@@ -49,18 +46,6 @@ export default function Home() {
           onChange={(e) => { setQuery(e.target.value); setSubmitted(false); }}
           onSubmit={(e) => { e.preventDefault(); setSubmitted(true); }}
         />
-      </section>
-
-      {/* Stats */}
-      <section style={styles.statsSection}>
-        <div style={styles.statsGrid}>
-          {stats.map((s, i) => (
-            <div key={s.label} style={i < stats.length - 1 ? styles.statItem : styles.statItemLast}>
-              <span style={styles.statNumber} className="gradient-text-stats">{s.number}</span>
-              <span style={styles.statLabel}>{s.label}</span>
-            </div>
-          ))}
-        </div>
       </section>
 
       {/* Divider */}

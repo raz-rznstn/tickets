@@ -15,6 +15,9 @@ export function BuyTicketsReturn() {
   const [customerEmail, setCustomerEmail] = useState('');
   const [tickets, setTickets] = useState([]);
   const [stripeSessionId, setStripeSessionId] = useState('');
+  const [concertTitle, setConcertTitle] = useState('');
+  const [concertDate, setConcertDate] = useState('');
+  const [concertVenue, setConcertVenue] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -24,6 +27,9 @@ export function BuyTicketsReturn() {
       setCustomerEmail(data.customer_email);
       setTickets(data.tickets || []);
       setStripeSessionId(data.stripe_session_id || sessionId || '');
+      setConcertTitle(data.title || '');
+      setConcertDate(data.date || '');
+      setConcertVenue(data.venue || '');
     });
   }, []);
 
@@ -47,7 +53,9 @@ export function BuyTicketsReturn() {
               {tickets.map((t) => (
                 <TicketCard
                   key={t.ticketId}
-                  title="Your Ticket"
+                  title={concertTitle}
+                  date={concertDate}
+                  venue={concertVenue}
                   ticketId={t.ticketId}
                   stripeSessionId={stripeSessionId}
                   status={t.status}
@@ -98,6 +106,11 @@ export default function BuyTickets() {
         </div>
       </div>
     );
+  }
+
+  if (!isLoading && concert?.availableSeats === 0) {
+    navigate(`/concert/${id}`, { replace: true });
+    return null;
   }
 
   if (error || !concert) {
@@ -156,7 +169,7 @@ export default function BuyTickets() {
               </div>
               <div style={styles.metaItem}>
                 <span style={styles.metaLabel}>Doors Open</span>
-                <span style={styles.metaValue}>7:00 PM</span>
+                <span style={styles.metaValue}>{concert.doorsOpen}</span>
               </div>
               <div style={styles.metaItem}>
                 <span style={styles.metaLabel}>Price</span>

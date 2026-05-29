@@ -1,14 +1,5 @@
 const mongoose = require('mongoose');
 
-const highlightSchema = new mongoose.Schema(
-  {
-    icon:  { type: String },
-    label: { type: String },
-    value: { type: String },
-  },
-  { _id: false }
-);
-
 const concertSchema = new mongoose.Schema(
   {
     imageUrl:    { type: String, required: true },
@@ -18,13 +9,11 @@ const concertSchema = new mongoose.Schema(
     price:       { type: String, required: true },
     doorsOpen:   { type: String },
     description: { type: String },
-    highlights:   { type: [highlightSchema], default: [] },
-    genre:        { type: String },
-    ageLimit:     { type: String },
-    photography:  { type: String },
-    capacity:     { type: Number },
-    soldTickets:  { type: Number, default: 0 },
-    deletedAt:    { type: Date, default: null },
+    genre:       { type: String },
+    ageLimit:    { type: String },
+    capacity:    { type: Number },
+    soldTickets: { type: Number, default: 0 },
+    deletedAt:   { type: Date, default: null },
   },
   { toJSON: { virtuals: true } }
 );

@@ -41,40 +41,6 @@ export const styles = {
     marginBottom: '40px',
   },
 
-  statsSection: {
-    maxWidth: '760px',
-    margin: '0 auto 64px',
-    padding: '0 24px',
-  },
-  statsGrid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(4, 1fr)',
-    border: `1px solid ${colors.borderDefault}`,
-    borderRadius: borderRadius.xl,
-    overflow: 'hidden',
-  },
-  statItem: {
-    textAlign: 'center',
-    padding: '24px 16px',
-    borderRight: `1px solid ${colors.borderDefault}`,
-  },
-  statItemLast: {
-    textAlign: 'center',
-    padding: '24px 16px',
-  },
-  statNumber: {
-    fontSize: fontSize.xl8,
-    fontWeight: fontWeight.black,
-    display: 'block',
-    marginBottom: '3px',
-  },
-  statLabel: {
-    fontSize: fontSize.sm,
-    color: colors.textSecondary,
-    letterSpacing: '1.9px',
-    textTransform: 'uppercase',
-  },
-
   divider: {
     display: 'flex',
     alignItems: 'center',

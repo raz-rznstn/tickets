@@ -1,18 +1,9 @@
 const { connect } = require('./connection');
-const Message = require('./models/Message');
 const Concert = require('./models/Concert');
 const User = require('./models/User');
 const { concerts } = require('../mock/concerts');
 
 async function seed() {
-  const msgCount = await Message.countDocuments();
-  if (msgCount === 0) {
-    await Message.create({ message: 'Hello World from MongoDB!' });
-    console.log('[seed] Seeded hello message.');
-  } else {
-    console.log('[seed] Message collection already has data — skipping.');
-  }
-
   const concertCount = await Concert.countDocuments();
   if (concertCount === 0) {
     await Concert.insertMany(concerts);

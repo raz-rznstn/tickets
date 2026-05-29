@@ -115,6 +115,18 @@ export const styles = {
     color: colors.textPrimary,
   },
 
+  soldOutTag: {
+    fontSize: fontSize.xl2,
+    fontWeight: fontWeight.bold,
+    color: colors.primary,
+    border: `1px solid ${colors.primaryBorder}`,
+    backgroundColor: colors.primaryBg,
+    borderRadius: borderRadius.lg,
+    padding: '14px 32px',
+    letterSpacing: '1.6px',
+    textTransform: 'uppercase',
+  },
+
   buySection: {
     backgroundColor: colors.bgCard,
     border: `1px solid ${colors.borderDefault}`,
@@ -143,6 +155,33 @@ export const styles = {
     fontSize: fontSize.base,
     color: colors.textSecondary,
     marginTop: '5px',
+  },
+  qtyControls: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '16px',
+  },
+  qtyBtn: {
+    background: colors.bgBase,
+    border: `1px solid ${colors.borderDefault}`,
+    borderRadius: borderRadius.sm,
+    width: '36px',
+    height: '36px',
+    color: colors.textPrimary,
+    fontSize: fontSize.xl2,
+    fontWeight: fontWeight.bold,
+    cursor: 'pointer',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexShrink: 0,
+  },
+  qtyValue: {
+    fontSize: fontSize.xl2,
+    fontWeight: fontWeight.bold,
+    color: colors.textPrimary,
+    minWidth: '20px',
+    textAlign: 'center',
   },
   buyBtn: {
     background: `linear-gradient(135deg, ${colors.primary}, ${colors.primaryDark})`,
