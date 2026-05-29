@@ -44,7 +44,7 @@ export default function Navbar() {
               style={{ ...styles.link, ...(pathname === '/my-orders' ? styles.linkActive : {}) }}
               onClick={() => navigate('/my-orders')}
             >
-              My Tickets
+              My Orders
             </button>
           )}
 
